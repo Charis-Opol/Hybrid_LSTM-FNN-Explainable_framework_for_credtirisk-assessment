@@ -1,0 +1,25 @@
+Uganda Mobile Money Credit Risk Experiment (15,000 rows)
+============================================================
+Data source: Uganda_Mobile_Money_Logs_15000.xlsx
+Model output: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_15000
+
+Validation metrics:
+  accuracy: 0.6711
+  precision: 0.6908
+  recall: 0.8566
+  f1: 0.7648
+  average_precision: 0.7592
+  roc_auc: 0.6842
+
+Test metrics:
+  accuracy: 0.6555
+  precision: 0.6879
+  recall: 0.8165
+  f1: 0.7467
+  average_precision: 0.7585
+  roc_auc: 0.6693
+
+SHAP artifacts:
+  Global summary: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_15000\explainability\global_shap_summary.png
+  Feature importance: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_15000\explainability\feature_importance.csv
+  Local explanations: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_15000\explainability\local_explanations.json

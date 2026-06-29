@@ -1,0 +1,1852 @@
+[
+  {
+    "borrower_id": "B3120",
+    "predicted_default_risk": 0.5223192572593689,
+    "main_drivers": [
+      {
+        "feature": "month_6_expenditure_ratio",
+        "value": 22500000000000.0,
+        "shap_value": -0.024070327261867093,
+        "plain_language": "month_6_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "value": 22500000000000.0,
+        "shap_value": 0.011192153069504577,
+        "plain_language": "month_6_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": 1.2764103393589787,
+        "shap_value": -0.01102648206954848,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -0.8893561429628344,
+        "shap_value": -0.009668961954638592,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.05476701878030394,
+        "shap_value": 0.005349132982787857,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (52.2%). Main model drivers: month_6_expenditure_ratio reduced the predicted default risk for this borrower.; month_6_sent_received_ratio increased the predicted default risk for this borrower.; financial_stability_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1596",
+    "predicted_default_risk": 0.5944315195083618,
+    "main_drivers": [
+      {
+        "feature": "average_outflow",
+        "value": 0.944073774290294,
+        "shap_value": 0.013631146568517423,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_balance_volatility",
+        "value": 411850.80916819867,
+        "shap_value": 0.011141296061001553,
+        "plain_language": "month_5_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.39147645119422086,
+        "shap_value": 0.010012939297446665,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.8210382574112278,
+        "shap_value": 0.0078082898951390475,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 0.48652589790932393,
+        "shap_value": 0.004848997282105566,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (59.4%). Main model drivers: average_outflow increased the predicted default risk for this borrower.; month_5_balance_volatility increased the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2734",
+    "predicted_default_risk": 0.5168657898902893,
+    "main_drivers": [
+      {
+        "feature": "month_9_expenditure_ratio",
+        "value": 43300000000000.0,
+        "shap_value": -0.017436645054030687,
+        "plain_language": "month_9_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_expenditure_ratio",
+        "value": 15000000000000.0,
+        "shap_value": -0.011939573986102096,
+        "plain_language": "month_4_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.2694417139894933,
+        "shap_value": 0.011339392258498813,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 34299999999999.996,
+        "shap_value": -0.010628412232077996,
+        "plain_language": "month_5_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "value": 43300000000000.0,
+        "shap_value": 0.008774176167402259,
+        "plain_language": "month_9_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (51.7%). Main model drivers: month_9_expenditure_ratio reduced the predicted default risk for this borrower.; month_4_expenditure_ratio reduced the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2157",
+    "predicted_default_risk": 0.5394190549850464,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.7455582519139183,
+        "shap_value": 0.01889371962017635,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -1.5768483020263784,
+        "shap_value": -0.010470523365629076,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.5027107303865334,
+        "shap_value": 0.007650439524730318,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -0.9984545209436552,
+        "shap_value": -0.006469179097162043,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_liquidity_score",
+        "value": 801155000000000.0,
+        "shap_value": -0.0034471960599598236,
+        "plain_language": "month_9_liquidity_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (53.9%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3500",
+    "predicted_default_risk": 0.5531643629074097,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.9174548104360642,
+        "shap_value": 0.02362272064118789,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_expenditure_ratio",
+        "value": 41300000000000.0,
+        "shap_value": -0.007937507405802893,
+        "plain_language": "month_9_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "value": 46600000000000.0,
+        "shap_value": -0.0069007186077387934,
+        "plain_language": "month_10_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.8964283655243369,
+        "shap_value": 0.006893495470355473,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_expenditure_ratio",
+        "value": 17700000000000.0,
+        "shap_value": -0.006087537934685364,
+        "plain_language": "month_11_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (55.3%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_9_expenditure_ratio reduced the predicted default risk for this borrower.; month_10_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2604",
+    "predicted_default_risk": 0.33480018377304077,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09036484693070612,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": 2.1182431162504254,
+        "shap_value": -0.05146520909302961,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -2.8901226061263254,
+        "shap_value": -0.025509913674357853,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.018789051818223643,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -0.44604305927568133,
+        "shap_value": -0.004160258223818537,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a low predicted default risk (33.5%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; financial_stability_score reduced the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3750",
+    "predicted_default_risk": 0.5714439153671265,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.9174548104357457,
+        "shap_value": 0.026441168256158748,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.9025165332233573,
+        "shap_value": 0.016396556331356168,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_liquidity_score",
+        "value": 943086000000000.0,
+        "shap_value": 0.0150850537113028,
+        "plain_language": "month_3_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -1.2464836746790138,
+        "shap_value": -0.013338037609493062,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_expenditure_ratio",
+        "value": 35300000000000.0,
+        "shap_value": -0.009180457838038059,
+        "plain_language": "month_6_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (57.1%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; month_3_liquidity_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2253",
+    "predicted_default_risk": 0.4560413062572479,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "value": 2.1169169036007354,
+        "shap_value": -0.022168447253893806,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_liquidity_score",
+        "value": 1973866000000000.0,
+        "shap_value": -0.017544055862351776,
+        "plain_language": "month_5_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_liquidity_score",
+        "value": 2556520000000000.0,
+        "shap_value": -0.015246121078865088,
+        "plain_language": "month_6_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.009566622061056984,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_average_balance",
+        "value": 0.0,
+        "shap_value": -0.002888508553182452,
+        "plain_language": "month_4_average_balance reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (45.6%). Main model drivers: financial_stability_score reduced the predicted default risk for this borrower.; month_5_liquidity_score reduced the predicted default risk for this borrower.; month_6_liquidity_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3752",
+    "predicted_default_risk": 0.36865606904029846,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.08542140478228324,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": 2.3086382445501528,
+        "shap_value": -0.0490545080187331,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -2.3992921698694096,
+        "shap_value": -0.01997259572273773,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.016912708819323795,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 2.34028978857956,
+        "shap_value": 0.01579357168954898,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (36.9%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; financial_stability_score reduced the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2181",
+    "predicted_default_risk": 0.48371705412864685,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09603221514239148,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 1.8432213537385627,
+        "shap_value": 0.014034564230046098,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 1.9957447789556026,
+        "shap_value": 0.010735917206625303,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -1.0214319731203947,
+        "shap_value": 0.0059691382280192395,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -0.028575963414771095,
+        "shap_value": 0.004219361136102935,
+        "plain_language": "average_balance increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (48.4%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; behaviour_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2738",
+    "predicted_default_risk": 0.45025572180747986,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09792884397589686,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.188941231863646,
+        "shap_value": -0.016308402628298246,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 19200000000000.0,
+        "shap_value": 0.008459217617696487,
+        "plain_language": "month_12_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "value": 19200000000000.0,
+        "shap_value": 0.005342652317127338,
+        "plain_language": "month_12_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_monthly_outflow",
+        "value": 0.0,
+        "shap_value": 0.0038278663267019212,
+        "plain_language": "month_3_monthly_outflow increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (45.0%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; average_inflow reduced the predicted default risk for this borrower.; month_12_expenditure_ratio increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3888",
+    "predicted_default_risk": 0.5911403298377991,
+    "main_drivers": [
+      {
+        "feature": "behaviour_score",
+        "value": 0.8840438131493028,
+        "shap_value": 0.011312252829698227,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.7048823386181453,
+        "shap_value": 0.009417700825956278,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_balance_volatility",
+        "value": 1209383.112639663,
+        "shap_value": 0.0073248159100307774,
+        "plain_language": "month_9_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_average_balance",
+        "value": 66321.0,
+        "shap_value": 0.006636371612897703,
+        "plain_language": "month_5_average_balance increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_monthly_inflow",
+        "value": 15600.0,
+        "shap_value": 0.004714946947377415,
+        "plain_language": "month_5_monthly_inflow increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (59.1%). Main model drivers: behaviour_score increased the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.; month_9_balance_volatility increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3333",
+    "predicted_default_risk": 0.5156069993972778,
+    "main_drivers": [
+      {
+        "feature": "month_6_expenditure_ratio",
+        "value": 38100000000000.0,
+        "shap_value": -0.015226495460717178,
+        "plain_language": "month_6_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "value": 38100000000000.0,
+        "shap_value": 0.010933284361056585,
+        "plain_language": "month_6_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": 1.704332344796786,
+        "shap_value": -0.007138997196113998,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 0.0,
+        "shap_value": 0.005334198581740759,
+        "plain_language": "month_8_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -0.82384170260033,
+        "shap_value": -0.004867936886208479,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (51.6%). Main model drivers: month_6_expenditure_ratio reduced the predicted default risk for this borrower.; month_6_sent_received_ratio increased the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3599",
+    "predicted_default_risk": 0.4853787422180176,
+    "main_drivers": [
+      {
+        "feature": "month_3_liquidity_score",
+        "value": 934104000000000.0,
+        "shap_value": -0.007663954800700135,
+        "plain_language": "month_3_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -1.0734314045774611,
+        "shap_value": -0.007206744497090362,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_liquidity_score",
+        "value": 2847599000000000.0,
+        "shap_value": -0.006403072408620499,
+        "plain_language": "month_9_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_liquidity_score",
+        "value": 986806000000000.0,
+        "shap_value": -0.006400237979817658,
+        "plain_language": "month_7_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -0.4145063655222377,
+        "shap_value": -0.00379875053176612,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (48.5%). Main model drivers: month_3_liquidity_score reduced the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.; month_9_liquidity_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3623",
+    "predicted_default_risk": 0.5595524311065674,
+    "main_drivers": [
+      {
+        "feature": "behaviour_score",
+        "value": 1.332715101702919,
+        "shap_value": 0.008571054928596474,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 13300000000000.0,
+        "shap_value": -0.007212346240584214,
+        "plain_language": "month_8_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.9706426631554569,
+        "shap_value": 0.006892173151195213,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_sent_received_ratio",
+        "value": 13300000000000.0,
+        "shap_value": 0.00507473179526884,
+        "plain_language": "month_8_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_recovery_after_dormancy",
+        "value": 44200.0,
+        "shap_value": 0.0036962662622084513,
+        "plain_language": "month_8_recovery_after_dormancy increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (56.0%). Main model drivers: behaviour_score increased the predicted default risk for this borrower.; month_8_expenditure_ratio reduced the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1980",
+    "predicted_default_risk": 0.5941950082778931,
+    "main_drivers": [
+      {
+        "feature": "month_3_balance_volatility",
+        "value": 185783.82147539113,
+        "shap_value": 0.012790571616027443,
+        "plain_language": "month_3_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_liquidity_score",
+        "value": 1240712000000000.0,
+        "shap_value": 0.007476020495171238,
+        "plain_language": "month_8_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.5453851128855327,
+        "shap_value": 0.006836458533815552,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_balance_volatility",
+        "value": 1657868.4170343557,
+        "shap_value": 0.005984324662526847,
+        "plain_language": "month_10_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -0.04304077649945354,
+        "shap_value": 0.005783234988183876,
+        "plain_language": "average_balance increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (59.4%). Main model drivers: month_3_balance_volatility increased the predicted default risk for this borrower.; month_8_liquidity_score increased the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1417",
+    "predicted_default_risk": 0.47909659147262573,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09427735041198147,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.5001668810752877,
+        "shap_value": 0.011722962782124336,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.188941231863646,
+        "shap_value": -0.011623378056498011,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 2.1506331842683446,
+        "shap_value": 0.011177434394620754,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 16899999999999.998,
+        "shap_value": 0.009395423697627359,
+        "plain_language": "month_5_expenditure_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (47.9%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; average_inflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3874",
+    "predicted_default_risk": 0.5303752422332764,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.7455582519141758,
+        "shap_value": 0.02212247312949011,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.9168726710464808,
+        "shap_value": 0.01173051467656251,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -1.08382655304994,
+        "shap_value": -0.01115230037182419,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 77000000000000.0,
+        "shap_value": -0.011092940716339308,
+        "plain_language": "month_5_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 59400000000000.0,
+        "shap_value": -0.008371911957157826,
+        "plain_language": "month_8_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (53.0%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; behaviour_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3689",
+    "predicted_default_risk": 0.511445939540863,
+    "main_drivers": [
+      {
+        "feature": "behaviour_score",
+        "value": -0.7199841970633833,
+        "shap_value": -0.008300992400722467,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_liquidity_score",
+        "value": 804545000000000.0,
+        "shap_value": -0.0024035528186285133,
+        "plain_language": "month_4_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_monthly_inflow",
+        "value": 0.0,
+        "shap_value": -0.0020746205021800945,
+        "plain_language": "month_11_monthly_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.062743785879152,
+        "shap_value": -0.0018523082415448505,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 44400000000000.0,
+        "shap_value": -0.0012704523322878936,
+        "plain_language": "month_12_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (51.1%). Main model drivers: behaviour_score reduced the predicted default risk for this borrower.; month_4_liquidity_score reduced the predicted default risk for this borrower.; month_11_monthly_inflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1567",
+    "predicted_default_risk": 0.46173200011253357,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "value": 1.560836693962338,
+        "shap_value": -0.02584515462282395,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.015612008724950603,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -1.2886311613088883,
+        "shap_value": -0.007489079323670226,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": 0.12746187580382023,
+        "shap_value": -0.0057433929017816744,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_liquidity_score",
+        "value": 1058863999999999.9,
+        "shap_value": -0.003723587186832462,
+        "plain_language": "month_10_liquidity_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (46.2%). Main model drivers: financial_stability_score reduced the predicted default risk for this borrower.; average_outflow reduced the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3025",
+    "predicted_default_risk": 0.4738074243068695,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 1.1295566980055267,
+        "shap_value": -0.030625184469933713,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": 1.4735653207242436,
+        "shap_value": -0.025379194400751533,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": 0.7587853872932616,
+        "shap_value": 0.018549228572673652,
+        "plain_language": "average_inflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -1.9037989977817402,
+        "shap_value": -0.014496807547385686,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 1.4767380261490044,
+        "shap_value": 0.013935679061621195,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (47.4%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; financial_stability_score reduced the predicted default risk for this borrower.; average_inflow increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1331",
+    "predicted_default_risk": 0.5453431606292725,
+    "main_drivers": [
+      {
+        "feature": "month_3_balance_volatility",
+        "value": 859383.3190003167,
+        "shap_value": 0.010543963871780408,
+        "plain_language": "month_3_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_average_balance",
+        "value": 1390644.6666666667,
+        "shap_value": -0.007264731421649269,
+        "plain_language": "month_9_average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -1.1338677485642594,
+        "shap_value": 0.00681979775580203,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": 1.2445265001392385,
+        "shap_value": -0.005862951241720465,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 62600000000000.0,
+        "shap_value": -0.005608210054538443,
+        "plain_language": "month_12_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (54.5%). Main model drivers: month_3_balance_volatility increased the predicted default risk for this borrower.; month_9_average_balance reduced the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3546",
+    "predicted_default_risk": 0.47517842054367065,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.07613421483657741,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 2.1630503981963707,
+        "shap_value": 0.012157178520527894,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.188941231863646,
+        "shap_value": -0.011809186762310691,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 33899999999999.996,
+        "shap_value": 0.009738402649257289,
+        "plain_language": "month_12_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.39249584740186066,
+        "shap_value": 0.007959706238925312,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (47.5%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; behaviour_score increased the predicted default risk for this borrower.; average_inflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1333",
+    "predicted_default_risk": 0.5279160737991333,
+    "main_drivers": [
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 51000000000000.0,
+        "shap_value": -0.017165090881580965,
+        "plain_language": "month_5_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.4897766872228578,
+        "shap_value": 0.015390597512587994,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_expenditure_ratio",
+        "value": 16199999999999.998,
+        "shap_value": -0.013865546426273072,
+        "plain_language": "month_9_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 16199999999999.998,
+        "shap_value": -0.010240954436672296,
+        "plain_language": "month_8_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "value": 16199999999999.998,
+        "shap_value": 0.007495060514473021,
+        "plain_language": "month_9_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (52.8%). Main model drivers: month_5_expenditure_ratio reduced the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.; month_9_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1590",
+    "predicted_default_risk": 0.5329703092575073,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.9174548104360908,
+        "shap_value": 0.0226855018565236,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "value": 82900000000000.0,
+        "shap_value": -0.012255606317344214,
+        "plain_language": "month_10_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -1.2024352421136095,
+        "shap_value": -0.010968815349047374,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_expenditure_ratio",
+        "value": 8599999999999.999,
+        "shap_value": -0.010351038269382107,
+        "plain_language": "month_4_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_expenditure_ratio",
+        "value": 55400000000000.0,
+        "shap_value": -0.009364113437139972,
+        "plain_language": "month_11_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (53.3%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_10_expenditure_ratio reduced the predicted default risk for this borrower.; behaviour_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1549",
+    "predicted_default_risk": 0.5078041553497314,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.2592207378078336,
+        "shap_value": 0.013093867057693062,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 15100000000000.0,
+        "shap_value": -0.011473408821831085,
+        "plain_language": "month_8_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -0.9161794531060391,
+        "shap_value": -0.010004352751456417,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_liquidity_score",
+        "value": 2300766000000000.0,
+        "shap_value": -0.005223093480353809,
+        "plain_language": "month_5_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_average_balance",
+        "value": 0.0,
+        "shap_value": -0.002482851227208933,
+        "plain_language": "month_6_average_balance reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (50.8%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_8_expenditure_ratio reduced the predicted default risk for this borrower.; average_outflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3330",
+    "predicted_default_risk": 0.5509775876998901,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.7455582519141005,
+        "shap_value": 0.020149213523046328,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_expenditure_ratio",
+        "value": 42700000000000.0,
+        "shap_value": -0.00639724808434941,
+        "plain_language": "month_3_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.4048551920122123,
+        "shap_value": 0.003625123007082673,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -0.9867544385528807,
+        "shap_value": -0.003491124518006038,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_expenditure_ratio",
+        "value": 38000000000000.0,
+        "shap_value": -0.003421046691970494,
+        "plain_language": "month_11_expenditure_ratio reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (55.1%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_3_expenditure_ratio reduced the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1970",
+    "predicted_default_risk": 0.5437091588973999,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.21167688673249496,
+        "shap_value": 0.009830430756231412,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.37285060617021776,
+        "shap_value": 0.007060544828041328,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 100400000000000.0,
+        "shap_value": -0.005272144184069846,
+        "plain_language": "month_12_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_liquidity_score",
+        "value": 1373450000000000.0,
+        "shap_value": -0.0048434700173823194,
+        "plain_language": "month_8_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "value": 100400000000000.0,
+        "shap_value": 0.0037937948608231546,
+        "plain_language": "month_12_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (54.4%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; month_12_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1974",
+    "predicted_default_risk": 0.5470865964889526,
+    "main_drivers": [
+      {
+        "feature": "month_1_expenditure_ratio",
+        "value": 18500000000000.0,
+        "shap_value": -0.015674173443701728,
+        "plain_language": "month_1_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.4947715669768264,
+        "shap_value": 0.014359605437112002,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_expenditure_ratio",
+        "value": 10500000000000.0,
+        "shap_value": -0.011439886604347319,
+        "plain_language": "month_6_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_1_sent_received_ratio",
+        "value": 18500000000000.0,
+        "shap_value": 0.005565416758014114,
+        "plain_language": "month_1_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "value": 10500000000000.0,
+        "shap_value": 0.005250167656534627,
+        "plain_language": "month_6_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (54.7%). Main model drivers: month_1_expenditure_ratio reduced the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.; month_6_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2747",
+    "predicted_default_risk": 0.5911369323730469,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.2848104432920018,
+        "shap_value": 0.012827516991820602,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_sent_received_ratio",
+        "value": 27500000000000.0,
+        "shap_value": 0.00921716859972652,
+        "plain_language": "month_8_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 0.5466354324501352,
+        "shap_value": 0.009171530839306836,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_liquidity_score",
+        "value": 1748005000000000.0,
+        "shap_value": 0.007897789890985815,
+        "plain_language": "month_6_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": 0.6272141675464175,
+        "shap_value": 0.00480672797007797,
+        "plain_language": "average_balance increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (59.1%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_8_sent_received_ratio increased the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2544",
+    "predicted_default_risk": 0.4912862479686737,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.07820979563834121,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 2.2101051036078374,
+        "shap_value": 0.01064744685046669,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 24900000000000.0,
+        "shap_value": 0.007503674419489252,
+        "plain_language": "month_12_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_liquidity_score",
+        "value": 23.50036144578219,
+        "shap_value": 0.004814612702305441,
+        "plain_language": "month_12_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_liquidity_score",
+        "value": 0.0,
+        "shap_value": 0.004049203348445991,
+        "plain_language": "month_6_liquidity_score increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (49.1%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; behaviour_score increased the predicted default risk for this borrower.; month_12_expenditure_ratio increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2304",
+    "predicted_default_risk": 0.5920634269714355,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.47942414861159893,
+        "shap_value": 0.014739789527109555,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_1_sent_received_ratio",
+        "value": 13800000000000.0,
+        "shap_value": 0.012190594591218483,
+        "plain_language": "month_1_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_balance_volatility",
+        "value": 472709.3600155738,
+        "shap_value": 0.008854916697988584,
+        "plain_language": "month_11_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": 0.9881631350260839,
+        "shap_value": 0.005823292617120792,
+        "plain_language": "average_inflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 0.06267105981376293,
+        "shap_value": 0.0037036694364815056,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (59.2%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_1_sent_received_ratio increased the predicted default risk for this borrower.; month_11_balance_volatility increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3066",
+    "predicted_default_risk": 0.6051124334335327,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "value": -0.8178335912954611,
+        "shap_value": 0.010919544213032347,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_liquidity_score",
+        "value": 578869000000000.0,
+        "shap_value": 0.009358925297393515,
+        "plain_language": "month_5_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_balance_volatility",
+        "value": 630839.6579813289,
+        "shap_value": 0.008671493828781403,
+        "plain_language": "month_7_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_sent_received_ratio",
+        "value": 21500000000000.0,
+        "shap_value": 0.008657204978029636,
+        "plain_language": "month_10_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.05124665870223812,
+        "shap_value": 0.007697701240720225,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a high predicted default risk (60.5%). Main model drivers: financial_stability_score increased the predicted default risk for this borrower.; month_5_liquidity_score increased the predicted default risk for this borrower.; month_7_balance_volatility increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2927",
+    "predicted_default_risk": 0.5425260066986084,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.8124521170548084,
+        "shap_value": 0.021297492503977476,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_1_expenditure_ratio",
+        "value": 85600000000000.0,
+        "shap_value": -0.010301269362231299,
+        "plain_language": "month_1_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 22500000000000.0,
+        "shap_value": -0.01003093937566593,
+        "plain_language": "month_5_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.6086307683555056,
+        "shap_value": 0.0072760099543877025,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -1.0230617473976442,
+        "shap_value": -0.00713053567886338,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (54.3%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_1_expenditure_ratio reduced the predicted default risk for this borrower.; month_5_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2682",
+    "predicted_default_risk": 0.6106077432632446,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.9458812423408852,
+        "shap_value": 0.02781402131539165,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 1.5265227945427378,
+        "shap_value": 0.023503385719137036,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_liquidity_score",
+        "value": 1991090666666666.5,
+        "shap_value": 0.008895355213994635,
+        "plain_language": "month_4_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.6940315911736035,
+        "shap_value": 0.006559843980784785,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_sent_received_ratio",
+        "value": 211300000000000.0,
+        "shap_value": 0.0029115220539351937,
+        "plain_language": "month_8_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a high predicted default risk (61.1%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; average_outflow increased the predicted default risk for this borrower.; month_4_liquidity_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3971",
+    "predicted_default_risk": 0.5308012366294861,
+    "main_drivers": [
+      {
+        "feature": "month_4_expenditure_ratio",
+        "value": 30400000000000.0,
+        "shap_value": -0.010857376543078298,
+        "plain_language": "month_4_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.29728827185490514,
+        "shap_value": 0.010562808988775938,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_2_expenditure_ratio",
+        "value": 9000000000000.0,
+        "shap_value": -0.010472567761666478,
+        "plain_language": "month_2_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_sent_received_ratio",
+        "value": 30400000000000.0,
+        "shap_value": 0.008800064385712734,
+        "plain_language": "month_4_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_liquidity_score",
+        "value": 1279999000000000.0,
+        "shap_value": -0.0069276529676405955,
+        "plain_language": "month_10_liquidity_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (53.1%). Main model drivers: month_4_expenditure_ratio reduced the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.; month_2_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2147",
+    "predicted_default_risk": 0.4679878056049347,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09645053656860059,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.188941231863646,
+        "shap_value": -0.015382717165869812,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_5_expenditure_ratio",
+        "value": 46900000000000.0,
+        "shap_value": 0.013259598787168722,
+        "plain_language": "month_5_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": 2.199299949031871,
+        "shap_value": 0.008937377543270918,
+        "plain_language": "behaviour_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "value": 22300000000000.0,
+        "shap_value": 0.006736747321384686,
+        "plain_language": "month_10_expenditure_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (46.8%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; average_inflow reduced the predicted default risk for this borrower.; month_5_expenditure_ratio increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3893",
+    "predicted_default_risk": 0.5466258525848389,
+    "main_drivers": [
+      {
+        "feature": "month_3_expenditure_ratio",
+        "value": 16899999999999.998,
+        "shap_value": -0.03251184839276526,
+        "plain_language": "month_3_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_sent_received_ratio",
+        "value": 16899999999999.998,
+        "shap_value": 0.013252390755711174,
+        "plain_language": "month_3_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.49343014446319305,
+        "shap_value": 0.011713288121719843,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": 2.416019772297183,
+        "shap_value": 0.01101696105505431,
+        "plain_language": "average_inflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_liquidity_score",
+        "value": 2575189000000000.0,
+        "shap_value": -0.00857312273107904,
+        "plain_language": "month_11_liquidity_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (54.7%). Main model drivers: month_3_expenditure_ratio reduced the predicted default risk for this borrower.; month_3_sent_received_ratio increased the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3274",
+    "predicted_default_risk": 0.5821923017501831,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.3044111480851084,
+        "shap_value": 0.01430511004941921,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.818066131289547,
+        "shap_value": 0.008840186488919443,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_balance_volatility",
+        "value": 701025.6628683432,
+        "shap_value": 0.005978303893533578,
+        "plain_language": "month_6_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_2_sent_received_ratio",
+        "value": 23600000000000.0,
+        "shap_value": 0.004350081518694421,
+        "plain_language": "month_2_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "value": 7500000000000.0,
+        "shap_value": 0.004175043818344443,
+        "plain_language": "month_9_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (58.2%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.; month_6_balance_volatility increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3439",
+    "predicted_default_risk": 0.3354349136352539,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": 2.5879122128205716,
+        "shap_value": -0.09235941467199292,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": 2.243038858041082,
+        "shap_value": -0.05503844173296059,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -2.5216564895908453,
+        "shap_value": -0.019953473469570136,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.019335193833099805,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -0.5127134080976782,
+        "shap_value": -0.006002854925163791,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a low predicted default risk (33.5%). Main model drivers: income_regularity reduced the predicted default risk for this borrower.; financial_stability_score reduced the predicted default risk for this borrower.; average_balance reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1060",
+    "predicted_default_risk": 0.522710919380188,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.9241502671695345,
+        "shap_value": 0.024295676448196194,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_1_expenditure_ratio",
+        "value": 44000000000000.0,
+        "shap_value": -0.016035950542339843,
+        "plain_language": "month_1_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_expenditure_ratio",
+        "value": 15899999999999.998,
+        "shap_value": -0.015140872977269262,
+        "plain_language": "month_4_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_expenditure_ratio",
+        "value": 34499999999999.996,
+        "shap_value": -0.011347982497580747,
+        "plain_language": "month_3_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_4_sent_received_ratio",
+        "value": 15899999999999.998,
+        "shap_value": 0.0087763257418362,
+        "plain_language": "month_4_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (52.3%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; month_1_expenditure_ratio reduced the predicted default risk for this borrower.; month_4_expenditure_ratio reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1161",
+    "predicted_default_risk": 0.5610034465789795,
+    "main_drivers": [
+      {
+        "feature": "month_3_balance_volatility",
+        "value": 523478.92828699417,
+        "shap_value": 0.012756810918840693,
+        "plain_language": "month_3_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "value": 11800000000000.0,
+        "shap_value": 0.004538675467928379,
+        "plain_language": "month_9_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_3_average_balance",
+        "value": 521136.5,
+        "shap_value": 0.003627934637596685,
+        "plain_language": "month_3_average_balance increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_2_recovery_after_dormancy",
+        "value": 18700.0,
+        "shap_value": 0.0019442727801498871,
+        "plain_language": "month_2_recovery_after_dormancy increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": 0.1444657445762907,
+        "shap_value": 0.0016372331576102045,
+        "plain_language": "average_inflow increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (56.1%). Main model drivers: month_3_balance_volatility increased the predicted default risk for this borrower.; month_9_sent_received_ratio increased the predicted default risk for this borrower.; month_3_average_balance increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1488",
+    "predicted_default_risk": 0.5508071184158325,
+    "main_drivers": [
+      {
+        "feature": "income_regularity",
+        "value": -0.45476821486659214,
+        "shap_value": 0.015509517426651112,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "financial_stability_score",
+        "value": -0.9027216245440218,
+        "shap_value": 0.013042762602129672,
+        "plain_language": "financial_stability_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_liquidity_score",
+        "value": 981247000000000.0,
+        "shap_value": 0.010120197631302444,
+        "plain_language": "month_7_liquidity_score increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": 1.647373410383108,
+        "shap_value": 0.009610015720989658,
+        "plain_language": "average_outflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_balance",
+        "value": -1.0853501735525737,
+        "shap_value": -0.008540595594697024,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (55.1%). Main model drivers: income_regularity increased the predicted default risk for this borrower.; financial_stability_score increased the predicted default risk for this borrower.; month_7_liquidity_score increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B3827",
+    "predicted_default_risk": 0.5157015323638916,
+    "main_drivers": [
+      {
+        "feature": "month_3_liquidity_score",
+        "value": 1834460500000000.0,
+        "shap_value": -0.022746943097440953,
+        "plain_language": "month_3_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_expenditure_ratio",
+        "value": 22500000000000.0,
+        "shap_value": -0.01869742339993724,
+        "plain_language": "month_11_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_liquidity_score",
+        "value": 2879058000000000.0,
+        "shap_value": -0.015767278793849912,
+        "plain_language": "month_7_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.5599017713557902,
+        "shap_value": 0.010656260759390187,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_sent_received_ratio",
+        "value": 22500000000000.0,
+        "shap_value": 0.006067257303351348,
+        "plain_language": "month_11_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (51.6%). Main model drivers: month_3_liquidity_score reduced the predicted default risk for this borrower.; month_11_expenditure_ratio reduced the predicted default risk for this borrower.; month_7_liquidity_score reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2700",
+    "predicted_default_risk": 0.5500499606132507,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "value": 1.4439079786966444,
+        "shap_value": -0.0237294257731326,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "value": 0.5166204986149513,
+        "shap_value": 0.00750119130072538,
+        "plain_language": "month_12_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_average_balance",
+        "value": 1879551.0,
+        "shap_value": 0.006612193991795129,
+        "plain_language": "month_6_average_balance increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_expenditure_ratio",
+        "value": 0.0,
+        "shap_value": 0.005190964143712351,
+        "plain_language": "month_8_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_2_average_balance",
+        "value": 2693671.0,
+        "shap_value": 0.005053213609261849,
+        "plain_language": "month_2_average_balance increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (55.0%). Main model drivers: financial_stability_score reduced the predicted default risk for this borrower.; month_12_expenditure_ratio increased the predicted default risk for this borrower.; month_6_average_balance increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2263",
+    "predicted_default_risk": 0.5279197096824646,
+    "main_drivers": [
+      {
+        "feature": "month_6_expenditure_ratio",
+        "value": 43900000000000.0,
+        "shap_value": -0.02184287659562094,
+        "plain_language": "month_6_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "value": 43900000000000.0,
+        "shap_value": 0.011407802425731433,
+        "plain_language": "month_6_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -0.6468129723721671,
+        "shap_value": -0.006984971455654987,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_8_average_balance",
+        "value": 1620695.0,
+        "shap_value": 0.002558775980225928,
+        "plain_language": "month_8_average_balance increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": 0.007819586650821952,
+        "shap_value": 0.002484084388381705,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (52.8%). Main model drivers: month_6_expenditure_ratio reduced the predicted default risk for this borrower.; month_6_sent_received_ratio increased the predicted default risk for this borrower.; average_outflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1357",
+    "predicted_default_risk": 0.5074598789215088,
+    "main_drivers": [
+      {
+        "feature": "average_balance",
+        "value": -1.3661678920927713,
+        "shap_value": -0.007190062513170529,
+        "plain_language": "average_balance reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_9_liquidity_score",
+        "value": 1209644000000000.0,
+        "shap_value": -0.0047736262893521625,
+        "plain_language": "month_9_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_inflow",
+        "value": -1.024646443695154,
+        "shap_value": -0.0038127637859767926,
+        "plain_language": "average_inflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "behaviour_score",
+        "value": -0.6831246778245079,
+        "shap_value": -0.003030016819525904,
+        "plain_language": "behaviour_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_monthly_inflow",
+        "value": 0.0,
+        "shap_value": -0.0014694255541757993,
+        "plain_language": "month_6_monthly_inflow reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (50.7%). Main model drivers: average_balance reduced the predicted default risk for this borrower.; month_9_liquidity_score reduced the predicted default risk for this borrower.; average_inflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2617",
+    "predicted_default_risk": 0.3958861231803894,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "value": 2.134931793636928,
+        "shap_value": -0.0477461491995082,
+        "plain_language": "financial_stability_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": 0.7569446684799164,
+        "shap_value": -0.03196572276788809,
+        "plain_language": "income_regularity reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "average_outflow",
+        "value": -1.1443664858735827,
+        "shap_value": -0.020165260907052868,
+        "plain_language": "average_outflow reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_6_liquidity_score",
+        "value": 876997000000000.0,
+        "shap_value": -0.010129719706678994,
+        "plain_language": "month_6_liquidity_score reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_11_liquidity_score",
+        "value": 1110102999999999.9,
+        "shap_value": -0.00644457280756995,
+        "plain_language": "month_11_liquidity_score reduced the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (39.6%). Main model drivers: financial_stability_score reduced the predicted default risk for this borrower.; income_regularity reduced the predicted default risk for this borrower.; average_outflow reduced the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B2627",
+    "predicted_default_risk": 0.5622600317001343,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "value": 0.6837812448685151,
+        "shap_value": 0.011077532898892425,
+        "plain_language": "average_inflow increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_1_recovery_after_dormancy",
+        "value": 17650.0,
+        "shap_value": 0.005091808230159003,
+        "plain_language": "month_1_recovery_after_dormancy increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_balance_volatility",
+        "value": 1159621.8244584454,
+        "shap_value": 0.0024445376250693688,
+        "plain_language": "month_7_balance_volatility increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "value": 0.0,
+        "shap_value": 0.002412681240541379,
+        "plain_language": "month_10_expenditure_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_recovery_after_dormancy",
+        "value": 17650.0,
+        "shap_value": 0.0023027572324283204,
+        "plain_language": "month_7_recovery_after_dormancy increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (56.2%). Main model drivers: average_inflow increased the predicted default risk for this borrower.; month_1_recovery_after_dormancy increased the predicted default risk for this borrower.; month_7_balance_volatility increased the predicted default risk for this borrower.."
+  },
+  {
+    "borrower_id": "B1614",
+    "predicted_default_risk": 0.5376471281051636,
+    "main_drivers": [
+      {
+        "feature": "month_2_expenditure_ratio",
+        "value": 57000000000000.0,
+        "shap_value": -0.0225484301821151,
+        "plain_language": "month_2_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_expenditure_ratio",
+        "value": 21400000000000.0,
+        "shap_value": -0.01500874637402598,
+        "plain_language": "month_7_expenditure_ratio reduced the predicted default risk for this borrower."
+      },
+      {
+        "feature": "income_regularity",
+        "value": -0.38219023407853364,
+        "shap_value": 0.011331913059774877,
+        "plain_language": "income_regularity increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_2_sent_received_ratio",
+        "value": 57000000000000.0,
+        "shap_value": 0.00765199601303251,
+        "plain_language": "month_2_sent_received_ratio increased the predicted default risk for this borrower."
+      },
+      {
+        "feature": "month_7_sent_received_ratio",
+        "value": 21400000000000.0,
+        "shap_value": 0.005225303627265064,
+        "plain_language": "month_7_sent_received_ratio increased the predicted default risk for this borrower."
+      }
+    ],
+    "loan_officer_summary": "The borrower has a moderate predicted default risk (53.8%). Main model drivers: month_2_expenditure_ratio reduced the predicted default risk for this borrower.; month_7_expenditure_ratio reduced the predicted default risk for this borrower.; income_regularity increased the predicted default risk for this borrower.."
+  }
+]
