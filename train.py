@@ -21,6 +21,7 @@ import pandas as pd
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.utils.class_weight import compute_class_weight
+from evaluate import evaluate_model
 
 from config import MODELS_DIR, RANDOM_SEED
 from evaluate import compute_binary_metrics
@@ -186,10 +187,16 @@ def train_model(
     history_plot_path = plots_dir / "training_history.png"
     plot_training_history(history_frame, history_plot_path)
 
-    probabilities = model.predict([X_temp_test, X_static_test]).ravel()
-    metrics = compute_binary_metrics(y_test, probabilities)
-    evaluation_path = output_path / "evaluation.json"
-    evaluation_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
+    val_eval_dir = ensure_directory(output_path / "evaluation" / "validation")
+    test_eval_dir = ensure_directory(output_path / "evaluation" / "test")
+    val_artifacts, test_artifacts = evaluate_model(
+        model,
+        X_temp_val, X_static_val, y_val,
+        X_temp_test, X_static_test, y_test,
+        val_output_dir=val_eval_dir,
+        test_output_dir=test_eval_dir,
+    )
+    evaluation_path = test_artifacts.metrics_json
 
     LOGGER.info("Training complete. Artifacts written to %s", output_path)
     return TrainArtifacts(

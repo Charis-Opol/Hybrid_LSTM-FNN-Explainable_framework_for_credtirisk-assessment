@@ -75,38 +75,30 @@ def compute_binary_metrics(
     )
     return metrics
 
-
-def evaluate_model(
-    model: tf.keras.Model,
-    X_temporal_test: np.ndarray,
-    X_static_test: np.ndarray,
-    y_test: np.ndarray,
-    output_dir: str | Path = MODELS_DIR / "plots",
+def _evaluate_at_threshold(
+    y_true: np.ndarray,
+    probabilities: np.ndarray,
+    threshold: float,
+    output_dir: Path,
 ) -> EvaluationArtifacts:
-    """Evaluate a trained hybrid model and generate plots."""
+    """Score, report, and plot a single split at a fixed threshold."""
 
     output_path = ensure_directory(Path(output_dir))
-    probabilities = model.predict([X_temporal_test, X_static_test]).ravel()
-    metrics = compute_binary_metrics(y_test, probabilities)
-    predictions = (probabilities >= 0.5).astype(int)
+    predictions = (probabilities >= threshold).astype(int)
+    metrics = compute_binary_metrics(y_true, probabilities, threshold=threshold)
+    metrics["selected_threshold"] = threshold
 
     metrics_path = output_path / "evaluation.json"
     metrics_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
 
     report_path = output_path / "classification_report.csv"
-    report = classification_report(
-        y_test,
-        predictions,
-        output_dict=True,
-        zero_division=0,
-    )
+    report = classification_report(y_true, predictions, output_dict=True, zero_division=0)
     pd.DataFrame(report).transpose().to_csv(report_path)
 
-    confusion_plot = plot_confusion_matrix(y_test, predictions, output_path)
-    roc_plot = plot_roc_curve(y_test, probabilities, output_path)
-    pr_plot = plot_precision_recall_curve(y_test, probabilities, output_path)
+    confusion_plot = plot_confusion_matrix(y_true, predictions, output_path)
+    roc_plot = plot_roc_curve(y_true, probabilities, output_path)
+    pr_plot = plot_precision_recall_curve(y_true, probabilities, output_path)
 
-    LOGGER.info("Evaluation artifacts written to %s", output_path)
     return EvaluationArtifacts(
         metrics_json=metrics_path,
         classification_report_csv=report_path,
@@ -114,6 +106,41 @@ def evaluate_model(
         roc_curve_plot=roc_plot,
         precision_recall_curve_plot=pr_plot,
     )
+
+
+def evaluate_model(
+    model: tf.keras.Model,
+    X_temporal_val: np.ndarray,
+    X_static_val: np.ndarray,
+    y_val: np.ndarray,
+    X_temporal_test: np.ndarray,
+    X_static_test: np.ndarray,
+    y_test: np.ndarray,
+    val_output_dir: str | Path,
+    test_output_dir: str | Path,
+) -> tuple[EvaluationArtifacts, EvaluationArtifacts]:
+    """Tune the decision threshold on validation, then evaluate val and test.
+
+    Returns:
+        (val_artifacts, test_artifacts) — each scored at the same
+        validation-selected threshold.
+    """
+
+    val_probabilities = model.predict([X_temporal_val, X_static_val]).ravel()
+    best_threshold, best_val_f1 = find_best_threshold(y_val, val_probabilities)
+    LOGGER.info("Selected threshold=%.3f (val F1=%.3f)", best_threshold, best_val_f1)
+
+    val_artifacts = _evaluate_at_threshold(
+        y_val, val_probabilities, best_threshold, val_output_dir
+    )
+
+    test_probabilities = model.predict([X_temporal_test, X_static_test]).ravel()
+    test_artifacts = _evaluate_at_threshold(
+        y_test, test_probabilities, best_threshold, test_output_dir
+    )
+
+    LOGGER.info("Evaluation artifacts written to %s and %s", val_output_dir, test_output_dir)
+    return val_artifacts, test_artifacts
 
 
 def compare_baselines(
@@ -316,6 +343,27 @@ def plot_training_history(
     plt.close(fig)
     LOGGER.info(f"Saved training history visualization: {output_path}")
     return output_path
+
+def find_best_threshold(
+    y_true: np.ndarray,
+    probabilities: np.ndarray,
+    metric: str = "f1",
+) -> tuple[float, float]:
+    """Find the probability threshold that maximizes a target metric.
+
+    Args:
+        y_true: Ground-truth binary labels.
+        probabilities: Predicted probabilities.
+        metric: One of "f1" (default) or "youden" (TPR - FPR, from ROC).
+
+    Returns:
+        Tuple of (best_threshold, best_metric_value).
+    """
+    precisions, recalls, thresholds = precision_recall_curve(y_true, probabilities)
+    f1_scores = 2 * precisions * recalls / (precisions + recalls + 1e-9)
+    # precision_recall_curve returns len(thresholds) = len(precisions) - 1
+    best_idx = np.argmax(f1_scores[:-1])
+    return float(thresholds[best_idx]), float(f1_scores[best_idx])
 
 
 def evaluate() -> None:
