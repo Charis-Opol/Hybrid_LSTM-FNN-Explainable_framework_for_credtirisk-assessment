@@ -119,12 +119,7 @@ def evaluate_model(
     val_output_dir: str | Path,
     test_output_dir: str | Path,
 ) -> tuple[EvaluationArtifacts, EvaluationArtifacts]:
-    """Tune the decision threshold on validation, then evaluate val and test.
-
-    Returns:
-        (val_artifacts, test_artifacts) — each scored at the same
-        validation-selected threshold.
-    """
+    """Tune the decision threshold on validation, then evaluate val and test."""
 
     val_probabilities = model.predict([X_temporal_val, X_static_val]).ravel()
     best_threshold, best_val_f1 = find_best_threshold(y_val, val_probabilities)
@@ -135,6 +130,11 @@ def evaluate_model(
     )
 
     test_probabilities = model.predict([X_temporal_test, X_static_test]).ravel()
+    LOGGER.info(
+        "Test probability range: min=%.4f, max=%.4f",
+        test_probabilities.min(),
+        test_probabilities.max(),
+    )
     test_artifacts = _evaluate_at_threshold(
         y_test, test_probabilities, best_threshold, test_output_dir
     )
