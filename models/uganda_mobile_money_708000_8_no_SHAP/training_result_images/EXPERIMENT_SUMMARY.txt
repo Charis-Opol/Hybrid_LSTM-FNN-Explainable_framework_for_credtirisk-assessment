@@ -1,0 +1,66 @@
+Uganda Mobile Money Credit Risk Experiment (708,000 transactions)
+============================================================
+Data source: uganda_mobile_money_master.csv
+Model output: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_708000_8_no_SHAP
+
+Hybrid model - single-split validation metrics:
+  accuracy: 0.9467
+  precision: 0.2174
+  recall: 0.4545
+  f1: 0.2941
+  average_precision: 0.1527
+  roc_auc: 0.8840
+  selected_threshold: 0.6597
+
+Hybrid model - single-split test metrics:
+  accuracy: 0.9311
+  precision: 0.0000
+  recall: 0.0000
+  f1: 0.0000
+  average_precision: 0.0953
+  roc_auc: 0.8905
+  selected_threshold: 0.6597
+
+Hybrid LSTM-GRU-Attention-FNN - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6477
+  accuracy: 0.9010
+  precision: 0.1153
+  recall: 0.4857
+  f1: 0.1863
+  average_precision: 0.1143
+  roc_auc: 0.8672
+
+XGBoost - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.0688
+  accuracy: 0.9123
+  precision: 0.1331
+  recall: 0.5000
+  f1: 0.2102
+  average_precision: 0.1221
+  roc_auc: 0.8866
+
+Vanilla LSTM - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6501
+  accuracy: 0.9343
+  precision: 0.1287
+  recall: 0.3143
+  f1: 0.1826
+  average_precision: 0.1002
+  roc_auc: 0.8534
+
+Logistic Regression - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6545
+  accuracy: 0.9177
+  precision: 0.1169
+  recall: 0.3857
+  f1: 0.1794
+  average_precision: 0.1034
+  roc_auc: 0.8592

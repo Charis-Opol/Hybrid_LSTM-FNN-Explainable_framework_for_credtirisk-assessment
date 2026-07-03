@@ -1,0 +1,50 @@
+{
+  "pooled_metrics": {
+    "n_positives_total": 70,
+    "n_total": 3000,
+    "selected_threshold": 0.6544643248372308,
+    "accuracy": 0.9176666666666666,
+    "precision": 0.11688311688311688,
+    "recall": 0.38571428571428573,
+    "f1": 0.17940199335548174,
+    "average_precision": 0.10339617213645518,
+    "roc_auc": 0.8592052657240371
+  },
+  "fold_summaries": [
+    {
+      "fold": 1,
+      "holdout_positives": 14,
+      "holdout_size": 600,
+      "roc_auc": 0.8839590443686006,
+      "average_precision": 0.10840980109069688
+    },
+    {
+      "fold": 2,
+      "holdout_positives": 14,
+      "holdout_size": 600,
+      "roc_auc": 0.886884446611409,
+      "average_precision": 0.1354748696724401
+    },
+    {
+      "fold": 3,
+      "holdout_positives": 14,
+      "holdout_size": 600,
+      "roc_auc": 0.8149683081423695,
+      "average_precision": 0.12294654051349997
+    },
+    {
+      "fold": 4,
+      "holdout_positives": 14,
+      "holdout_size": 600,
+      "roc_auc": 0.8443442223305704,
+      "average_precision": 0.13826787237756477
+    },
+    {
+      "fold": 5,
+      "holdout_positives": 14,
+      "holdout_size": 600,
+      "roc_auc": 0.8623842028278887,
+      "average_precision": 0.11444453057950872
+    }
+  ]
+}

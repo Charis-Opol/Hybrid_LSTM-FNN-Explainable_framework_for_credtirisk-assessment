@@ -25,8 +25,9 @@ from utils import ensure_directory
 
 LOGGER = logging.getLogger(__name__)
 
-METRIC_KEYS = ["precision", "recall", "f1", "average_precision", "roc_auc"]
+METRIC_KEYS = ["accuracy", "precision", "recall", "f1", "average_precision", "roc_auc"]
 METRIC_LABELS = {
+    "accuracy": "Accuracy",
     "precision": "Precision",
     "recall": "Recall",
     "f1": "F1",
@@ -101,12 +102,39 @@ def plot_model_comparison(summaries: dict[str, dict], output_path: Path) -> Path
     axis.legend(loc="upper right", fontsize=9)
     axis.grid(axis="y", alpha=0.3)
 
+    fig.text(
+        0.5, -0.02,
+        "Note: accuracy is misleading here (~97.7% baseline achievable by predicting no default for everyone, given ~2.3% positive rate)",
+        ha="center", fontsize=7, style="italic", color="dimgray",
+    )
+
     fig.tight_layout()
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output_path, dpi=150)
     plt.close(fig)
     LOGGER.info("Saved model comparison chart: %s", output_path)
     return output_path
+
+
+def _dataframe_to_markdown(frame: pd.DataFrame) -> str:
+    """Render a DataFrame as a markdown table without external dependencies.
+
+    Numeric columns are formatted to 4 decimal places; other columns are
+    rendered as plain strings.
+    """
+
+    def format_cell(value: object) -> str:
+        if isinstance(value, float):
+            return f"{value:.4f}"
+        return str(value)
+
+    header = "| " + " | ".join(str(col) for col in frame.columns) + " |"
+    separator = "| " + " | ".join("---" for _ in frame.columns) + " |"
+    body_lines = [
+        "| " + " | ".join(format_cell(value) for value in row) + " |"
+        for row in frame.itertuples(index=False, name=None)
+    ]
+    return "\n".join([header, separator, *body_lines])
 
 
 def write_comparison_table(summaries: dict[str, dict], output_path: Path) -> Path:
@@ -122,11 +150,20 @@ def write_comparison_table(summaries: dict[str, dict], output_path: Path) -> Pat
     frame = pd.DataFrame(rows).sort_values("F1", ascending=False).reset_index(drop=True)
 
     lines = ["# Model Comparison — Pooled Out-of-Fold Metrics (5-Fold CV)", ""]
-    lines.append(frame.to_markdown(index=False, floatfmt=".4f"))
+    lines.append(_dataframe_to_markdown(frame))
     lines.append("")
     lines.append(
         "All metrics computed on pooled out-of-fold predictions (every positive "
         "borrower evaluated exactly once across folds), not a single held-out split."
+    )
+    lines.append("")
+    lines.append(
+        "Note: Accuracy is included for completeness but is not a reliable "
+        "indicator of model quality here, given the ~2.3% positive rate — a "
+        "model that predicts \"no default\" for every borrower would score "
+        "~97.7% accuracy while catching zero actual defaulters. Precision, "
+        "recall, F1, average precision, and ROC-AUC are more informative for "
+        "this task."
     )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
