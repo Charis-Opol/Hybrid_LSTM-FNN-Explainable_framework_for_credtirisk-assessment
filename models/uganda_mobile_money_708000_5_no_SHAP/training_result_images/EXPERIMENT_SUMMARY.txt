@@ -1,0 +1,22 @@
+Uganda Mobile Money Credit Risk Experiment (708,000 transactions)
+============================================================
+Data source: uganda_mobile_money_master.csv
+Model output: C:\Users\chari\Desktop\Hybrid_LSTM-FNN-Explainable_framework_for_credtirisk-assessment\models\uganda_mobile_money_708000_5_no_SHAP
+
+Validation metrics:
+  accuracy: 0.9467
+  precision: 0.2174
+  recall: 0.4545
+  f1: 0.2941
+  average_precision: 0.1527
+  roc_auc: 0.8840
+  selected_threshold: 0.6597
+
+Test metrics:
+  accuracy: 0.9311
+  precision: 0.0000
+  recall: 0.0000
+  f1: 0.0000
+  average_precision: 0.0953
+  roc_auc: 0.8905
+  selected_threshold: 0.6597
