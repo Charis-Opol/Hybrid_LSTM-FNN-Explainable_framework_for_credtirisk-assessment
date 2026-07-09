@@ -1,0 +1,55 @@
+======================================================================
+UGANDA MOBILE MONEY DATASET
+EXPLORATORY DATA ANALYSIS
+======================================================================
+
+Rows: 718,230
+Columns: 36
+Borrowers: 3,000
+Transactions: 718,230
+
+Missing Values
+                    Missing  Percent
+borrower_id               0      0.0
+transaction_id            0      0.0
+timestamp                 0      0.0
+year                      0      0.0
+month                     0      0.0
+day                       0      0.0
+day_of_week               0      0.0
+hour                      0      0.0
+transaction_type          0      0.0
+amount                    0      0.0
+balance_before            0      0.0
+balance_after             0      0.0
+occupation                0      0.0
+district                  0      0.0
+region                    0      0.0
+gender                    0      0.0
+age                       0      0.0
+education                 0      0.0
+marital_status            0      0.0
+household_size            0      0.0
+monthly_income            0      0.0
+loan_amount               0      0.0
+loan_term_months          0      0.0
+interest_rate             0      0.0
+loan_cycle                0      0.0
+sacco_member              0      0.0
+risk_profile              0      0.0
+network                   0      0.0
+channel                   0      0.0
+merchant_category         0      0.0
+harvest_season            0      0.0
+school_fees_season        0      0.0
+christmas_season          0      0.0
+rainy_season              0      0.0
+financial_health          0      0.0
+default_label             0      0.0
+
+Summary Statistics Saved.
+Correlation Analysis Saved.
+Borrower Features Saved.
+PCA Analysis Saved.
+Statistical Tests Saved.
+Figures Generated Successfully.
