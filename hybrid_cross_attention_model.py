@@ -60,20 +60,41 @@ def build_cross_attention_hybrid_model(
     """
     l2 = tf.keras.regularizers.l2(l2_reg)
 
-    # --- Temporal branch: Masking -> GRU -> self-attention (kept as a full
-    # sequence output, not pooled, so it can be queried by the static branch) ---
+    # Explicit padding mask: True where a time step has any nonzero feature.
+    # Computed directly from the raw input and passed explicitly into both
+    # MultiHeadAttention calls below, rather than relying on Keras's
+    # automatic mask propagation -- MultiHeadAttention's call signature
+    # uses "attention_mask", not the generic "mask" argument Keras looks
+    # for during automatic propagation, so an implicit mask silently gets
+    # ignored (or, in the Transformer-encoder variant, corrupted) rather
+    # than actually applied.
     temporal_input = tf.keras.Input(
         shape=(sequence_length, temporal_features), name="temporal_input"
     )
+    padding_mask = tf.keras.layers.Lambda(
+        lambda t: tf.reduce_any(tf.not_equal(t, 0.0), axis=-1),
+        output_shape=(sequence_length,),
+        name="compute_padding_mask",
+    )(temporal_input)  # shape: (batch, sequence_length), boolean
+
+    # --- Temporal branch: Masking -> GRU -> self-attention (kept as a full
+    # sequence output, not pooled, so it can be queried by the static branch) ---
     x = tf.keras.layers.Masking(mask_value=0.0)(temporal_input)
     x = tf.keras.layers.GRU(
         gru_units, return_sequences=True, dropout=0.3, recurrent_dropout=0.2
     )(x)
+
+    self_attention_mask = tf.keras.layers.Lambda(
+        lambda m: m[:, tf.newaxis, :],
+        output_shape=(1, sequence_length),
+        name="expand_self_attention_mask",
+    )(padding_mask)
+
     self_attended = tf.keras.layers.MultiHeadAttention(
         num_heads=self_attention_heads,
         key_dim=self_attention_key_dim,
         name="temporal_self_attention",
-    )(x, x)
+    )(x, x, attention_mask=self_attention_mask)
     x = tf.keras.layers.Add()([x, self_attended])
     temporal_sequence = tf.keras.layers.LayerNormalization()(x)
     # temporal_sequence shape: (batch, sequence_length, gru_units)
@@ -95,11 +116,16 @@ def build_cross_attention_hybrid_model(
     # temporal sequence (key/value). Output length matches the query
     # length, i.e. one vector per borrower. ---
     query = tf.keras.layers.Reshape((1, static_dense_units))(static_embedding)
+    cross_attention_mask = tf.keras.layers.Lambda(
+        lambda m: m[:, tf.newaxis, :],
+        output_shape=(1, sequence_length),
+        name="expand_cross_attention_mask",
+    )(padding_mask)
     cross_attended = tf.keras.layers.MultiHeadAttention(
         num_heads=cross_attention_heads,
         key_dim=cross_attention_key_dim,
         name="static_queries_temporal_cross_attention",
-    )(query=query, value=temporal_sequence, key=temporal_sequence)
+    )(query=query, value=temporal_sequence, key=temporal_sequence, attention_mask=cross_attention_mask)
     cross_attended = tf.keras.layers.Reshape((static_dense_units,))(cross_attended)
 
     fused = tf.keras.layers.Add(name="residual_fusion")([static_embedding, cross_attended])

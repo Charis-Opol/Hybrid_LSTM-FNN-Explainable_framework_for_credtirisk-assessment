@@ -1,0 +1,36 @@
+Hybrid LSTM vs. Transformer-Encoder Hybrid
+============================================================
+Data source: uganda_mobile_money_master.csv
+
+Hybrid LSTM-GRU-Attention-FNN - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6477
+  accuracy: 0.9010
+  precision: 0.1153
+  recall: 0.4857
+  f1: 0.1863
+  average_precision: 0.1143
+  roc_auc: 0.8672
+
+Transformer-Encoder Hybrid - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6357
+  accuracy: 0.8983
+  precision: 0.1173
+  recall: 0.5143
+  f1: 0.1910
+  average_precision: 0.0933
+  roc_auc: 0.8590
+
+Cross-Attention Fusion Hybrid - pooled out-of-fold metrics (5-fold CV):
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.8514
+  accuracy: 0.9497
+  precision: 0.1653
+  recall: 0.2857
+  f1: 0.2094
+  average_precision: 0.1009
+  roc_auc: 0.8204
