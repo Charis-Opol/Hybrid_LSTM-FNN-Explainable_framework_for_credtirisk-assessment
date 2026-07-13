@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
+from typing import Union
 
 import numpy as np
 import pandas as pd
@@ -31,12 +32,16 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
+import argparse
 from sklearn.model_selection import StratifiedKFold, train_test_split
 from sklearn.utils.class_weight import compute_class_weight
 
 from config import MODELS_DIR, RANDOM_SEED
+from feature_engineering import FeatureColumns, engineer_features
 from hybrid_model import F1Score
-from utils import ensure_directory, set_random_seed
+from static_dataset import StaticDatasetBuilder
+from temporal_dataset import TemporalDatasetBuilder
+from utils import configure_logging, ensure_directory, set_random_seed
 
 LOGGER = logging.getLogger(__name__)
 
@@ -262,7 +267,7 @@ def run_kfold_cv_transformer(
     X_temporal: np.ndarray,
     X_static: np.ndarray,
     labels: np.ndarray,
-    output_dir: str | Path = MODELS_DIR / "kfold_transformer",
+    output_dir: Union[str, Path] = MODELS_DIR / "kfold_transformer",
     n_splits: int = 5,
     epochs: int = 100,
     batch_size: int = 128,
@@ -402,8 +407,135 @@ def run_kfold_cv_transformer(
     return summary
 
 
-if __name__ == "__main__":
-    raise RuntimeError(
-        "Import run_kfold_cv_transformer(X_temporal, X_static, labels) and call "
-        "it after building datasets, e.g. from a run_experiment script."
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run transformer encoder hybrid k-fold CV on a labeled borrower dataset."
     )
+    parser.add_argument(
+        "--data",
+        type=Path,
+        default=Path("data") / "raw" / "uganda_mobile_money_master.csv",
+        help="Path to the raw transaction dataset (CSV or Excel).",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=MODELS_DIR / "uganda_mobile_money_test_new_data",
+        help="Directory for model artifacts and summaries.",
+    )
+    parser.add_argument("--n-splits", type=int, default=5, help="Number of stratified folds.")
+    parser.add_argument("--epochs", type=int, default=100, help="Training epochs per fold.")
+    parser.add_argument("--batch-size", type=int, default=128, help="Batch size.")
+    return parser.parse_args()
+
+
+def _normalize_column_names(data: pd.DataFrame) -> pd.DataFrame:
+    rename_map = {
+        "timestamp": "transaction_date",
+        "amount": "transaction_amount",
+        "balance_after": "balance",
+        "default_label": "defaulted",
+        "loan_amount": "loan_amount",
+        "sacco_member": "sacco_membership",
+        "network": "preferred_network",
+        "channel": "preferred_channel",
+    }
+    existing = {k: v for k, v in rename_map.items() if k in data.columns}
+    if existing:
+        data = data.rename(columns=existing)
+    return data
+
+
+def load_and_normalize_dataset(path: Path) -> pd.DataFrame:
+    LOGGER.info("Loading dataset from %s", path)
+    if path.suffix.lower() in {".xlsx", ".xls"}:
+        data = pd.read_excel(path)
+    else:
+        data = pd.read_csv(path)
+
+    data = _normalize_column_names(data)
+    if "transaction_date" in data.columns:
+        data["transaction_date"] = pd.to_datetime(
+            data["transaction_date"], errors="coerce"
+        )
+    return data
+
+
+def build_training_arrays(data: pd.DataFrame):
+    feature_columns = FeatureColumns(
+        amount="transaction_amount",
+        balance="balance",
+        target="defaulted",
+    )
+    engineered = engineer_features(data, columns=feature_columns)
+    temporal = TemporalDatasetBuilder().build(engineered)
+    static = StaticDatasetBuilder().build(engineered)
+
+    static_by_borrower = {
+        borrower_id: row_index
+        for row_index, borrower_id in enumerate(static.borrower_ids.tolist())
+    }
+    static_indices = [
+        static_by_borrower[borrower_id]
+        for borrower_id in temporal.borrower_ids.tolist()
+    ]
+    X_static_aligned = static.X_static[static_indices]
+
+    if temporal.labels is None:
+        raise ValueError("The dataset must include default labels for training.")
+
+    return (
+        temporal.X_temporal,
+        X_static_aligned,
+        temporal.labels,
+        engineered,
+        temporal.feature_names,
+        static.feature_names,
+    )
+
+
+def main() -> None:
+    configure_logging()
+    args = parse_args()
+
+    args.output_dir = ensure_directory(args.output_dir)
+    data = load_and_normalize_dataset(args.data)
+    data = data.sort_values(["borrower_id", "transaction_date"]).reset_index(drop=True)
+
+    X_temporal, X_static, labels, engineered, temporal_names, static_names = (
+        build_training_arrays(data)
+    )
+
+    logging.info(
+        "Built datasets: %d borrowers, %d temporal features/month, %d static features",
+        len(labels), X_temporal.shape[2], X_static.shape[1],
+    )
+
+    unique_labels, label_counts = np.unique(labels, return_counts=True)
+    logging.info(
+        "Label distribution: %s",
+        dict(zip(unique_labels.tolist(), label_counts.tolist())),
+    )
+
+    engineered.to_csv(args.output_dir / "engineered_features.csv", index=False)
+    (args.output_dir / "temporal_feature_names.txt").write_text(
+        "\n".join(temporal_names), encoding="utf-8"
+    )
+    (args.output_dir / "static_feature_names.txt").write_text(
+        "\n".join(static_names), encoding="utf-8"
+    )
+
+    summary = run_kfold_cv_transformer(
+        X_temporal=X_temporal,
+        X_static=X_static,
+        labels=labels,
+        output_dir=args.output_dir / "kfold_transformer",
+        n_splits=args.n_splits,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+    )
+    logging.info("Finished transformer k-fold CV. Summary: %s", summary)
+
+
+if __name__ == "__main__":
+    main()
