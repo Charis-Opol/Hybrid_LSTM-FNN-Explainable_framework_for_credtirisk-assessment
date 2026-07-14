@@ -172,11 +172,122 @@ def write_comparison_table(summaries: dict[str, dict], output_path: Path) -> Pat
     return output_path
 
 
+def plot_pr_curves_overlay(model_result_dirs: dict[str, Path], output_path: Path) -> Path:
+    """Overlay every model's precision-recall curve plus a random baseline.
+
+    Reads oof_probabilities.npy and oof_true.npy from each model's result
+    directory (saved by the *_baseline / run_kfold_cv* functions). The
+    random baseline is the shared positive-class base rate, since all
+    models are evaluated on the same dataset/labels.
+
+    Args:
+        model_result_dirs: Mapping of display name -> directory containing
+            oof_probabilities.npy and oof_true.npy.
+        output_path: Where to save the PNG.
+
+    Returns:
+        Path to the saved chart.
+    """
+    from sklearn.metrics import average_precision_score, precision_recall_curve
+
+    fig, axis = plt.subplots(figsize=(7, 6))
+    base_rate = None
+
+    for model_name, result_dir in model_result_dirs.items():
+        result_dir = Path(result_dir)
+        probabilities_path = result_dir / "oof_probabilities.npy"
+        true_path = result_dir / "oof_true.npy"
+        if not probabilities_path.exists() or not true_path.exists():
+            LOGGER.warning(
+                "Missing oof_probabilities.npy/oof_true.npy for %s at %s, skipping",
+                model_name, result_dir,
+            )
+            continue
+
+        probabilities = np.load(probabilities_path)
+        y_true = np.load(true_path)
+        if base_rate is None:
+            base_rate = float(np.mean(y_true))
+
+        precision, recall, _ = precision_recall_curve(y_true, probabilities)
+        average_precision = average_precision_score(y_true, probabilities)
+        axis.plot(recall, precision, label=f"{model_name} (AP={average_precision:.3f})", linewidth=2)
+
+    if base_rate is not None:
+        axis.axhline(
+            base_rate, linestyle="--", color="gray",
+            label=f"Random baseline (AP={base_rate:.3f})",
+        )
+
+    axis.set_xlabel("Recall")
+    axis.set_ylabel("Precision")
+    axis.set_ylim(0, 1.02)
+    axis.set_title("Precision-Recall Curves — All Models vs. Random Baseline")
+    axis.legend(fontsize=8)
+    axis.grid(alpha=0.3)
+
+    fig.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path, dpi=150)
+    plt.close(fig)
+    LOGGER.info("Saved PR curve overlay: %s", output_path)
+    return output_path
+
+
+def compute_lift_table(summaries: dict[str, dict]) -> pd.DataFrame:
+    """Build a lift-over-random table from pooled_metrics.
+
+    Lift = average_precision / base_rate: how many times better than
+    random guessing each model's ranking is, in AP terms. Requires
+    n_positives_total and n_total to already be present in each model's
+    pooled_metrics (as written by the *_baseline / run_kfold_cv* functions).
+    """
+
+    rows = []
+    for model_name, metrics in summaries.items():
+        n_positives = metrics.get("n_positives_total")
+        n_total = metrics.get("n_total")
+        base_rate = (n_positives / n_total) if n_positives and n_total else float("nan")
+        average_precision = metrics.get("average_precision", float("nan"))
+        lift = average_precision / base_rate if base_rate else float("nan")
+        rows.append({
+            "Model": model_name,
+            "Base Rate": base_rate,
+            "Avg. Precision": average_precision,
+            "Lift over Random": lift,
+        })
+
+    return pd.DataFrame(rows).sort_values("Lift over Random", ascending=False).reset_index(drop=True)
+
+
+def write_lift_table(summaries: dict[str, dict], output_path: Path) -> Path:
+    """Write the lift-over-random table as markdown."""
+
+    frame = compute_lift_table(summaries)
+
+    lines = ["# Lift Over Random Baseline", ""]
+    lines.append(_dataframe_to_markdown(frame))
+    lines.append("")
+    lines.append(
+        "Lift = Average Precision / Base Rate. A model with zero skill "
+        "(random guessing) has average precision equal to the base rate, "
+        "i.e. lift = 1.0. Lift is a more honest measure of model quality "
+        "than raw average precision under severe class imbalance, since "
+        "raw AP looks small in absolute terms even for a genuinely strong "
+        "model when the base rate itself is very low."
+    )
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    LOGGER.info("Saved lift table: %s", output_path)
+    return output_path
+
+
 def compare_all_models(
     model_result_dirs: dict[str, Path],
     output_dir: str | Path,
-) -> tuple[Path, Path]:
-    """Load all model summaries, plot comparison, and write markdown table.
+) -> tuple[Path, Path, Path, Path]:
+    """Load all model summaries, plot comparisons, and write markdown tables.
 
     Args:
         model_result_dirs: Mapping of display name -> output_dir used for
@@ -187,10 +298,10 @@ def compare_all_models(
                 "Vanilla LSTM": OUTPUT_DIR / "kfold_vanilla_lstm",
                 "Logistic Regression": OUTPUT_DIR / "logistic_regression_baseline",
             }
-        output_dir: Directory to write the chart and table into.
+        output_dir: Directory to write the charts and tables into.
 
     Returns:
-        Tuple of (chart_path, table_path).
+        Tuple of (chart_path, table_path, pr_overlay_path, lift_table_path).
     """
     output_path = ensure_directory(Path(output_dir))
     summaries = load_model_summaries(model_result_dirs)
@@ -203,8 +314,12 @@ def compare_all_models(
 
     chart_path = plot_model_comparison(summaries, output_path / "model_comparison.png")
     table_path = write_comparison_table(summaries, output_path / "model_comparison.md")
+    pr_overlay_path = plot_pr_curves_overlay(
+        model_result_dirs, output_path / "pr_curves_overlay.png"
+    )
+    lift_table_path = write_lift_table(summaries, output_path / "lift_over_random.md")
 
-    return chart_path, table_path
+    return chart_path, table_path, pr_overlay_path, lift_table_path
 
 
 if __name__ == "__main__":

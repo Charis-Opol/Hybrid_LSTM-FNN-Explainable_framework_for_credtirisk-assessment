@@ -75,11 +75,44 @@ def compute_binary_metrics(
     )
     return metrics
 
+
+def compute_lift_over_random(
+    y_true: np.ndarray,
+    probabilities: np.ndarray,
+) -> dict[str, float]:
+    """Compute average precision alongside the random baseline and lift.
+
+    Under severe class imbalance, a model with zero skill still achieves
+    average precision equal to the positive class base rate. Reporting
+    lift (AP / base rate) is a much more honest way to communicate model
+    quality than raw AP alone, since raw AP looks unimpressive in
+    isolation even for a genuinely strong model when the base rate itself
+    is very low.
+
+    Args:
+        y_true: Ground-truth binary labels.
+        probabilities: Predicted probabilities.
+
+    Returns:
+        Dict with base_rate (random-baseline AP), average_precision, and
+        lift_over_random (average_precision / base_rate).
+    """
+    base_rate = float(np.mean(y_true))
+    average_precision = float(average_precision_score(y_true, probabilities))
+    lift = average_precision / base_rate if base_rate > 0 else float("nan")
+    return {
+        "base_rate": base_rate,
+        "average_precision": average_precision,
+        "lift_over_random": lift,
+    }
+
+
 def _evaluate_at_threshold(
     y_true: np.ndarray,
     probabilities: np.ndarray,
     threshold: float,
     output_dir: Path,
+    model_label: str = "Model",
 ) -> EvaluationArtifacts:
     """Score, report, and plot a single split at a fixed threshold."""
 
@@ -87,6 +120,7 @@ def _evaluate_at_threshold(
     predictions = (probabilities >= threshold).astype(int)
     metrics = compute_binary_metrics(y_true, probabilities, threshold=threshold)
     metrics["selected_threshold"] = threshold
+    metrics.update(compute_lift_over_random(y_true, probabilities))
 
     metrics_path = output_path / "evaluation.json"
     metrics_path.write_text(json.dumps(metrics, indent=2), encoding="utf-8")
@@ -96,8 +130,10 @@ def _evaluate_at_threshold(
     pd.DataFrame(report).transpose().to_csv(report_path)
 
     confusion_plot = plot_confusion_matrix(y_true, predictions, output_path)
-    roc_plot = plot_roc_curve(y_true, probabilities, output_path)
-    pr_plot = plot_precision_recall_curve(y_true, probabilities, output_path)
+    roc_plot = plot_roc_curve(y_true, probabilities, output_path, model_label=model_label)
+    pr_plot = plot_precision_recall_curve(
+        y_true, probabilities, output_path, model_label=model_label
+    )
 
     return EvaluationArtifacts(
         metrics_json=metrics_path,
@@ -118,6 +154,7 @@ def evaluate_model(
     y_test: np.ndarray,
     val_output_dir: str | Path,
     test_output_dir: str | Path,
+    model_label: str = "Model",
 ) -> tuple[EvaluationArtifacts, EvaluationArtifacts]:
     """Tune the decision threshold on validation, then evaluate val and test."""
 
@@ -126,7 +163,7 @@ def evaluate_model(
     LOGGER.info("Selected threshold=%.3f (val F1=%.3f)", best_threshold, best_val_f1)
 
     val_artifacts = _evaluate_at_threshold(
-        y_val, val_probabilities, best_threshold, val_output_dir
+        y_val, val_probabilities, best_threshold, val_output_dir, model_label=model_label
     )
 
     test_probabilities = model.predict([X_temporal_test, X_static_test]).ravel()
@@ -136,7 +173,7 @@ def evaluate_model(
         test_probabilities.max(),
     )
     test_artifacts = _evaluate_at_threshold(
-        y_test, test_probabilities, best_threshold, test_output_dir
+        y_test, test_probabilities, best_threshold, test_output_dir, model_label=model_label
     )
 
     LOGGER.info("Evaluation artifacts written to %s and %s", val_output_dir, test_output_dir)
@@ -254,6 +291,7 @@ def plot_roc_curve(
     y_true: np.ndarray,
     probabilities: np.ndarray,
     output_dir: Path,
+    model_label: str = "Model",
 ) -> Path:
     """Save ROC curve plot."""
 
@@ -261,10 +299,15 @@ def plot_roc_curve(
     fig, axis = plt.subplots(figsize=(6, 5))
     if len(np.unique(y_true)) > 1:
         false_positive_rate, true_positive_rate, _ = roc_curve(y_true, probabilities)
-        axis.plot(false_positive_rate, true_positive_rate, label="Hybrid model")
-    axis.plot([0, 1], [0, 1], linestyle="--", color="gray", label="Chance")
+        auc_value = roc_auc_score(y_true, probabilities)
+        axis.plot(
+            false_positive_rate, true_positive_rate,
+            label=f"{model_label} (AUC={auc_value:.3f})", linewidth=2,
+        )
+    axis.plot([0, 1], [0, 1], linestyle="--", color="gray", label="Random baseline (AUC=0.500)")
     axis.set_xlabel("False Positive Rate")
     axis.set_ylabel("True Positive Rate")
+    axis.set_title(f"ROC Curve — {model_label}")
     axis.legend()
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -276,15 +319,35 @@ def plot_precision_recall_curve(
     y_true: np.ndarray,
     probabilities: np.ndarray,
     output_dir: Path,
+    model_label: str = "Model",
 ) -> Path:
-    """Save precision-recall curve plot."""
+    """Save a precision-recall curve plot with a random-baseline reference line.
+
+    The random baseline is the positive class base rate: a model with
+    zero skill has average precision equal to this value. Plotting it
+    lets a reader see at a glance how much lift the model has over
+    chance, which matters a lot under severe class imbalance where the
+    absolute precision numbers otherwise look unimpressive in isolation.
+    """
 
     path = output_dir / "precision_recall_curve.png"
     precision, recall, _ = precision_recall_curve(y_true, probabilities)
+    average_precision = average_precision_score(y_true, probabilities)
+    base_rate = float(np.mean(y_true))
+
     fig, axis = plt.subplots(figsize=(6, 5))
-    axis.plot(recall, precision, label="Hybrid model")
+    axis.plot(
+        recall, precision,
+        label=f"{model_label} (AP={average_precision:.3f})", linewidth=2,
+    )
+    axis.axhline(
+        base_rate, linestyle="--", color="gray",
+        label=f"Random baseline (AP={base_rate:.3f})",
+    )
     axis.set_xlabel("Recall")
     axis.set_ylabel("Precision")
+    axis.set_ylim(0, 1.02)
+    axis.set_title(f"Precision-Recall Curve — {model_label}")
     axis.legend()
     fig.tight_layout()
     fig.savefig(path, dpi=150)
