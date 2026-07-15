@@ -1,0 +1,78 @@
+Evaluation Comparison: Hybrid vs. Logistic Regression vs. XGBoost vs. Vanilla LSTM vs. Transformers
+================================================================================
+Data source: uganda_mobile_money_master_5000.csv
+All models untuned (default hyperparameters). 5-fold CV, pooled OOF metrics.
+
+Hybrid LSTM-GRU-Attention-FNN - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.4440
+  accuracy: 0.4194
+  precision: 0.3505
+  recall: 0.9089
+  f1: 0.5059
+  average_precision: 0.3535
+  roc_auc: 0.5572
+
+Logistic Regression - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.2976
+  accuracy: 0.3842
+  precision: 0.3406
+  recall: 0.9437
+  f1: 0.5006
+  average_precision: 0.3506
+  roc_auc: 0.5463
+
+XGBoost - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.2585
+  accuracy: 0.4106
+  precision: 0.3477
+  recall: 0.9156
+  f1: 0.5040
+  average_precision: 0.3544
+  roc_auc: 0.5514
+
+Vanilla LSTM - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.3773
+  accuracy: 0.3640
+  precision: 0.3347
+  recall: 0.9566
+  f1: 0.4959
+  average_precision: 0.3650
+  roc_auc: 0.5572
+
+Transformer-Encoder Hybrid - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.3356
+  accuracy: 0.3740
+  precision: 0.3397
+  recall: 0.9688
+  f1: 0.5030
+  average_precision: 0.3588
+  roc_auc: 0.5532
+
+Cross-Attention Fusion Hybrid - pooled out-of-fold metrics:
+  n_positives_total: 1635
+  n_total: 5000
+  selected_threshold: 0.3680
+  accuracy: 0.3804
+  precision: 0.3404
+  recall: 0.9541
+  f1: 0.5018
+  average_precision: 0.3540
+  roc_auc: 0.5550
+
+Lift over random baseline (Average Precision / Base Rate):
+  Vanilla LSTM: base_rate=0.3270, AP=0.3650, lift=1.12x
+  Transformer-Encoder Hybrid: base_rate=0.3270, AP=0.3588, lift=1.10x
+  XGBoost: base_rate=0.3270, AP=0.3544, lift=1.08x
+  Cross-Attention Fusion Hybrid: base_rate=0.3270, AP=0.3540, lift=1.08x
+  Hybrid LSTM-GRU-Attention-FNN: base_rate=0.3270, AP=0.3535, lift=1.08x
+  Logistic Regression: base_rate=0.3270, AP=0.3506, lift=1.07x

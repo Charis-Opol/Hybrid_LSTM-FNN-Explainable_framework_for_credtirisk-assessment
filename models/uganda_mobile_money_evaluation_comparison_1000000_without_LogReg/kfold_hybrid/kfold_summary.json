@@ -1,0 +1,50 @@
+{
+  "pooled_metrics": {
+    "n_positives_total": 5000,
+    "n_total": 5000,
+    "selected_threshold": 0.413528710603714,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "average_precision": 1.0,
+    "roc_auc": NaN
+  },
+  "fold_summaries": [
+    {
+      "fold": 1,
+      "holdout_positives": 1000,
+      "holdout_size": 1000,
+      "roc_auc": NaN,
+      "average_precision": 1.0
+    },
+    {
+      "fold": 2,
+      "holdout_positives": 1000,
+      "holdout_size": 1000,
+      "roc_auc": NaN,
+      "average_precision": 1.0
+    },
+    {
+      "fold": 3,
+      "holdout_positives": 1000,
+      "holdout_size": 1000,
+      "roc_auc": NaN,
+      "average_precision": 1.0
+    },
+    {
+      "fold": 4,
+      "holdout_positives": 1000,
+      "holdout_size": 1000,
+      "roc_auc": NaN,
+      "average_precision": 1.0
+    },
+    {
+      "fold": 5,
+      "holdout_positives": 1000,
+      "holdout_size": 1000,
+      "roc_auc": NaN,
+      "average_precision": 1.0
+    }
+  ]
+}
