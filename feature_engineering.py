@@ -64,14 +64,35 @@ class LocalisedFeatureEngineer:
         monthly = self._behavioural_scores(monthly)
 
         if self.columns.target in frame:
-            labels = frame.groupby(self.columns.borrower_id)[self.columns.target].max()
-            monthly[self.columns.target] = monthly[self.columns.borrower_id].map(labels)
+            monthly[self.columns.target] = monthly[self.columns.borrower_id].map(
+                self._default_labels(frame)
+            )
 
         LOGGER.info("Engineered feature dataframe shape: %s", monthly.shape)
         return monthly.sort_values(
             [self.columns.borrower_id, "month"],
             kind="mergesort",
         ).reset_index(drop=True)
+
+    def _default_labels(self, frame: pd.DataFrame) -> pd.Series:
+        """Borrower is in default if most transactions in their latest observed
+        month were flagged. ``target`` is a noisy per-transaction delinquency
+        flag rather than a rare terminal event, so taking `.max()` over a
+        borrower's whole history saturates to 1 for almost everyone; a
+        recency-based majority vote instead reflects current default status.
+        """
+        monthly_rate = (
+            frame.groupby([self.columns.borrower_id, "month"])[self.columns.target]
+            .mean()
+            .reset_index()
+            .sort_values([self.columns.borrower_id, "month"])
+        )
+        last_month_rate = (
+            monthly_rate.groupby(self.columns.borrower_id)
+            .tail(1)
+            .set_index(self.columns.borrower_id)[self.columns.target]
+        )
+        return (last_month_rate > 0.5).astype(float)
 
     def _prepare_transactions(self, data: pd.DataFrame) -> pd.DataFrame:
         required = [
