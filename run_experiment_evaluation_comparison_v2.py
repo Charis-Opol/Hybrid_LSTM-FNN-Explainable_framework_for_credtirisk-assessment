@@ -50,13 +50,13 @@ DATA_PATH = (
     PROJECT_DIR
     / "data"
     / "raw"
-    / "uganda_mobile_money_master_3000.csv"
+    / "uganda_mobile_money_master_5000.csv"
 )
 
 OUTPUT_DIR = (
     PROJECT_DIR
     / "models"
-    / "uganda_mobile_money_evaluation_comparison_700000"
+    / "uganda_mobile_money_evaluation_comparison_700000_v2"
 )
 
 logging.basicConfig(
