@@ -1,0 +1,870 @@
+[
+  {
+    "borrower_index": 249,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_5_expenditure_ratio",
+        "ig_attribution": -0.2097485512495041,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.17101648449897766,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.1253829449415207,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.09873873740434647,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_5_sent_received_ratio",
+        "ig_attribution": 0.06875570863485336,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 406,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.15777552127838135,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.08410394191741943,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.05743129923939705,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "ig_attribution": 0.024853739887475967,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "ig_attribution": -0.02383960410952568,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 557,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_12_expenditure_ratio",
+        "ig_attribution": -0.11761634051799774,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.045840535312891006,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": 0.040564194321632385,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.03994206711649895,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_8_sent_received_ratio",
+        "ig_attribution": 0.03621191531419754,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 784,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_9_expenditure_ratio",
+        "ig_attribution": -0.11172371357679367,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": 0.09549964219331741,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.07993867248296738,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.03372417762875557,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.03089090995490551,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 847,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.07708629965782166,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.07091431319713593,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.041160475462675095,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": 0.010224729776382446,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "ig_attribution": 0.008059525862336159,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 891,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_9_expenditure_ratio",
+        "ig_attribution": -0.087348572909832,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": 0.08162461966276169,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.04784051328897476,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.04054935649037361,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "ig_attribution": 0.03271571174263954,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1017,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_2_liquidity_score",
+        "ig_attribution": -0.1946401298046112,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.040060751140117645,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": -0.027161963284015656,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_2_sent_received_ratio",
+        "ig_attribution": -0.012035276740789413,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": -0.009722906164824963,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1257,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.3012019097805023,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": -0.12508441507816315,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.0875934511423111,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_5_sent_received_ratio",
+        "ig_attribution": -0.06828475743532181,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": -0.060818519443273544,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1313,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.0874948725104332,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.07951794564723969,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.03696191683411598,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": 0.02310400828719139,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_12_expenditure_ratio",
+        "ig_attribution": 0.016110172495245934,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1369,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.020320791751146317,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "ig_attribution": 0.018606744706630707,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": 0.012412740848958492,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": -0.008620266802608967,
+        "direction": "reduced"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.008234996348619461,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1452,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.23260647058486938,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": -0.19573669135570526,
+        "direction": "reduced"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": -0.10676202923059464,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.08964808285236359,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.07475543767213821,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1490,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_2_sent_received_ratio",
+        "ig_attribution": 0.022478366270661354,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.01842990703880787,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": 0.015347449108958244,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": 0.009709072299301624,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.007413558661937714,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1637,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.17889778316020966,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "ig_attribution": -0.10417807847261429,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.05000697821378708,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.049169108271598816,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.03739909827709198,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1786,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_12_expenditure_ratio",
+        "ig_attribution": 0.019122404977679253,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": 0.013036509975790977,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.010519924573600292,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.006424367427825928,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": -0.005341115407645702,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1883,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.05232655256986618,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.031182922422885895,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": 0.02549641765654087,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.007954052649438381,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.006545086856931448,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1884,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "month_10_sent_received_ratio",
+        "ig_attribution": 0.05502418801188469,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "ig_attribution": -0.015410495921969414,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.013931777328252792,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_7_sent_received_ratio",
+        "ig_attribution": 0.012938247993588448,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_10_liquidity_score",
+        "ig_attribution": 0.01097362581640482,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 1911,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "month_2_sent_received_ratio",
+        "ig_attribution": -0.04019678384065628,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": 0.03560855984687805,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.028352992609143257,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_2_expenditure_ratio",
+        "ig_attribution": 0.025126582011580467,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.02342897839844227,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2064,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.1479591429233551,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.08899664133787155,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": -0.06929430365562439,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": 0.024021385237574577,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": 0.014001007191836834,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2291,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "month_11_expenditure_ratio",
+        "ig_attribution": 0.0478723868727684,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": 0.030865997076034546,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.022921431809663773,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_11_sent_received_ratio",
+        "ig_attribution": -0.022821085527539253,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_10_expenditure_ratio",
+        "ig_attribution": -0.022386454045772552,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2324,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_9_expenditure_ratio",
+        "ig_attribution": 0.07172658294439316,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": -0.02437339909374714,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": 0.019801007583737373,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.014047330245375633,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.009557393379509449,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2388,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "month_10_sent_received_ratio",
+        "ig_attribution": 0.03755425661802292,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": 0.02035342901945114,
+        "direction": "increased"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": 0.019640237092971802,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_10_liquidity_score",
+        "ig_attribution": 0.010748549364507198,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.01000894419848919,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2440,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.24249930679798126,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_12_sent_received_ratio",
+        "ig_attribution": -0.1519732028245926,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": -0.10486031323671341,
+        "direction": "reduced"
+      },
+      {
+        "feature": "behaviour_score",
+        "ig_attribution": -0.08861605823040009,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.06591878086328506,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2453,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.11301679909229279,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.07659068703651428,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.02709585428237915,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.022845113649964333,
+        "direction": "reduced"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": 0.02269086427986622,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2500,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.10958870500326157,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.0753244161605835,
+        "direction": "increased"
+      },
+      {
+        "feature": "income_regularity",
+        "ig_attribution": 0.027974817901849747,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.02620084211230278,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.0162221547216177,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2601,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_7_expenditure_ratio",
+        "ig_attribution": -0.20264548063278198,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.14202158153057098,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.10452166944742203,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": 0.08380579948425293,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": 0.08017319440841675,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2849,
+    "true_label": 1,
+    "main_drivers": [
+      {
+        "feature": "month_11_expenditure_ratio",
+        "ig_attribution": -0.12067326158285141,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_11_sent_received_ratio",
+        "ig_attribution": 0.05837449058890343,
+        "direction": "increased"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.05219016596674919,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.04204562306404114,
+        "direction": "increased"
+      },
+      {
+        "feature": "month_6_sent_received_ratio",
+        "ig_attribution": 0.030443286523222923,
+        "direction": "increased"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2979,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "month_9_liquidity_score",
+        "ig_attribution": -0.1328657865524292,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.057318445295095444,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.021423203870654106,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.014103502035140991,
+        "direction": "reduced"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": -0.010794463567435741,
+        "direction": "reduced"
+      }
+    ]
+  },
+  {
+    "borrower_index": 2989,
+    "true_label": 0,
+    "main_drivers": [
+      {
+        "feature": "average_inflow",
+        "ig_attribution": 0.07329209893941879,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_balance",
+        "ig_attribution": 0.06589533388614655,
+        "direction": "increased"
+      },
+      {
+        "feature": "average_outflow",
+        "ig_attribution": -0.0499153658747673,
+        "direction": "reduced"
+      },
+      {
+        "feature": "financial_stability_score",
+        "ig_attribution": -0.0378483384847641,
+        "direction": "reduced"
+      },
+      {
+        "feature": "month_9_sent_received_ratio",
+        "ig_attribution": 0.01708669401705265,
+        "direction": "increased"
+      }
+    ]
+  }
+]

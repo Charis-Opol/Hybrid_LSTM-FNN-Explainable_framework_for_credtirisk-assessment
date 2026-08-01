@@ -30,6 +30,7 @@ import numpy as np
 import tensorflow as tf
 from sklearn.model_selection import StratifiedKFold
 
+import attention_visualization  # noqa: F401  registers PaddingMaskLayer/ExpandMaskLayer/MaskedGlobalAveragePooling1D for model loading
 from config import RANDOM_SEED
 from integrated_gradients import integrated_gradients_batch
 from run_experiment_evaluation_comparison import (
