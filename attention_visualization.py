@@ -20,6 +20,37 @@ from config import RANDOM_SEED
 from hybrid_model import F1Score
 
 
+@tf.keras.utils.register_keras_serializable(package="credit_risk_interpretability")
+class PaddingMaskLayer(tf.keras.layers.Layer):
+    """True where any feature at that time step is nonzero.
+
+    ``transformer_model.py`` computes this with a ``Lambda`` layer that
+    captures the ``tf`` module itself as an argument (so it's available
+    when the lambda's bytecode is unpickled). That pattern reloads fine
+    within the process that trained the model, but a real Keras 3
+    save/load round-trip in a fresh process fails: the module object
+    isn't serializable ("Could not locate class 'module'"). A plain
+    ``Layer`` subclass has no such problem.
+    """
+
+    def call(self, inputs):
+        return tf.reduce_any(tf.not_equal(inputs, 0.0), axis=-1)
+
+
+@tf.keras.utils.register_keras_serializable(package="credit_risk_interpretability")
+class ExpandMaskLayer(tf.keras.layers.Layer):
+    def call(self, mask):
+        return mask[:, None, :]
+
+
+@tf.keras.utils.register_keras_serializable(package="credit_risk_interpretability")
+class MaskedGlobalAveragePooling1D(tf.keras.layers.Layer):
+    def call(self, inputs):
+        x, mask = inputs
+        mask_float = tf.cast(mask, tf.float32)[..., tf.newaxis]
+        return tf.reduce_sum(x * mask_float, axis=1) / tf.maximum(tf.reduce_sum(mask_float, axis=1), 1e-6)
+
+
 def build_hybrid_model_with_attention(
     sequence_length: int,
     temporal_features: int,
@@ -89,10 +120,7 @@ def build_transformer_hybrid_model_with_attention(
     l2 = tf.keras.regularizers.l2(l2_reg)
 
     temporal_input = tf.keras.Input(shape=(sequence_length, temporal_features), name="temporal_input")
-    padding_mask = tf.keras.layers.Lambda(
-        lambda t, tf_backend: tf_backend.reduce_any(tf_backend.not_equal(t, 0.0), axis=-1),
-        arguments={"tf_backend": tf}, output_shape=(sequence_length,), name="compute_padding_mask",
-    )(temporal_input)
+    padding_mask = PaddingMaskLayer(name="compute_padding_mask")(temporal_input)
 
     x = tf.keras.layers.Dense(model_dim, kernel_regularizer=l2, name="temporal_projection")(temporal_input)
     positions = tf.range(start=0, limit=sequence_length, delta=1)
@@ -101,9 +129,7 @@ def build_transformer_hybrid_model_with_attention(
     )(positions)
     x = x + position_embeddings
 
-    attention_mask = tf.keras.layers.Lambda(
-        lambda m: m[:, None, :], output_shape=(1, sequence_length), name="expand_attention_mask",
-    )(padding_mask)
+    attention_mask = ExpandMaskLayer(name="expand_attention_mask")(padding_mask)
 
     attention_weights_per_layer = []
     for layer_index in range(num_encoder_layers):
@@ -122,13 +148,7 @@ def build_transformer_hybrid_model_with_attention(
         x = tf.keras.layers.Add()([x, feed_forward])
         x = tf.keras.layers.LayerNormalization(name=f"{name}_feedforward_norm")(x)
 
-    pooled = tf.keras.layers.Lambda(
-        lambda inputs, tf_backend: (
-            tf_backend.reduce_sum(inputs[0] * tf_backend.cast(inputs[1], tf_backend.float32)[..., tf_backend.newaxis], axis=1)
-            / tf_backend.maximum(tf_backend.reduce_sum(tf_backend.cast(inputs[1], tf_backend.float32)[..., tf_backend.newaxis], axis=1), 1e-6)
-        ),
-        arguments={"tf_backend": tf}, output_shape=(model_dim,), name="masked_global_average_pool",
-    )([x, padding_mask])
+    pooled = MaskedGlobalAveragePooling1D(name="masked_global_average_pool")([x, padding_mask])
 
     temporal_embedding = tf.keras.layers.Dense(
         model_dim, activation="relu", kernel_regularizer=l2, name="temporal_embedding",
