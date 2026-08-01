@@ -41,7 +41,15 @@ class ExplainabilityArtifacts:
 
 
 class HybridModelExplainer:
-    """Generate SHAP explanations for hybrid temporal and static inputs."""
+    """Generate SHAP explanations for hybrid temporal and static inputs.
+
+    Uses ``shap.GradientExplainer`` rather than ``KernelExplainer``: the
+    hybrid model is a differentiable Keras model, so gradient-based
+    attribution is exact-er and orders of magnitude faster than
+    perturbation-based KernelExplainer, and it returns a real per-input
+    array (not a flattened, manually-reshaped one) so waterfall/force
+    plots work natively instead of being skipped.
+    """
 
     def __init__(
         self,
@@ -78,36 +86,36 @@ class HybridModelExplainer:
             Paths to generated SHAP artifacts.
         """
 
-        combined = self._combine_inputs(X_temporal, X_static)
-        feature_names = self._combined_feature_names(X_temporal.shape[1])
-        background = shap.sample(
-            combined,
-            min(background_size, len(combined)),
-            random_state=42,
-        )
-        explain_frame = combined[: min(explanation_size, len(combined))]
+        rng = np.random.default_rng(42)
+        background_index = rng.choice(len(X_temporal), size=min(background_size, len(X_temporal)), replace=False)
+        explain_index = np.arange(min(explanation_size, len(X_temporal)))
 
-        # Use KernelExplainer for high-dimensional feature spaces
-        explainer = shap.KernelExplainer(
-            self._predict_combined,
-            background,
+        background = [X_temporal[background_index], X_static[background_index]]
+        explain_temporal = X_temporal[explain_index]
+        explain_static = X_static[explain_index]
+
+        explainer = shap.GradientExplainer(self.model, background)
+        temporal_shap, static_shap = explainer.shap_values([explain_temporal, explain_static])
+        # shape (n, seq_len, temporal_features, 1) / (n, static_features, 1) -> drop the
+        # trailing single-output axis and flatten temporal to match feature_names order.
+        temporal_shap = temporal_shap[..., 0].reshape(len(explain_index), -1)
+        static_shap = static_shap[..., 0]
+        shap_values_array = np.concatenate([temporal_shap, static_shap], axis=1)
+
+        feature_names = self._combined_feature_names(X_temporal.shape[1])
+        explain_frame = self._combine_inputs(explain_temporal, explain_static)
+
+        predictions = self._predict_combined(explain_temporal, explain_static)
+        base_value = float(np.mean(predictions) - shap_values_array.sum(axis=1).mean())
+        shap_values = shap.Explanation(
+            values=shap_values_array,
+            base_values=np.full(len(explain_index), base_value),
+            data=explain_frame,
             feature_names=feature_names,
         )
-        shap_values_array = explainer.shap_values(explain_frame)
-        
-        # Wrap in Explanation object for compatibility
-        class ShapExplanation:
-            def __init__(self, values, base_value=0.5):
-                self.values = values
-                self.base_values = np.array([base_value] * len(values))
-                
-            def __getitem__(self, idx):
-                return self.values[idx]
-        
-        shap_values = ShapExplanation(shap_values_array)
 
         summary_path = self.output_dir / "global_shap_summary.png"
-        self._plot_summary(shap_values, explain_frame, feature_names, summary_path)
+        self._plot_summary(shap_values, summary_path)
 
         importance_path = self.output_dir / "feature_importance.csv"
         importance = self._feature_importance(shap_values, feature_names)
@@ -116,16 +124,16 @@ class HybridModelExplainer:
         local_path = self.output_dir / "local_explanations.json"
         local_explanations = self._local_plain_language_explanations(
             shap_values,
-            explain_frame,
+            predictions,
             feature_names,
-            borrower_ids=borrower_ids,
+            borrower_ids=borrower_ids[explain_index] if borrower_ids is not None else None,
         )
         local_path.write_text(
             json.dumps(local_explanations, indent=2),
             encoding="utf-8",
         )
 
-        self._plot_local_explanations(shap_values, feature_names)
+        self._plot_local_explanations(shap_values)
 
         LOGGER.info("Explainability artifacts written to %s", self.output_dir)
         return ExplainabilityArtifacts(
@@ -136,17 +144,8 @@ class HybridModelExplainer:
             force_plot_dir=self.force_plot_dir,
         )
 
-    def _predict_combined(self, combined: np.ndarray) -> np.ndarray:
-        sequence_length = len(self.temporal_feature_names)
-        temporal_width = self._temporal_width_from_combined(combined)
-        temporal_flat = combined[:, :temporal_width]
-        static = combined[:, temporal_width:]
-        temporal = temporal_flat.reshape(
-            combined.shape[0],
-            -1,
-            sequence_length,
-        )
-        return self.model.predict([temporal, static], verbose=0).ravel()
+    def _predict_combined(self, X_temporal: np.ndarray, X_static: np.ndarray) -> np.ndarray:
+        return self.model.predict([X_temporal, X_static], verbose=0).ravel()
 
     def _combine_inputs(
         self,
@@ -166,22 +165,16 @@ class HybridModelExplainer:
         ]
         return [*temporal_names, *self.static_feature_names]
 
-    def _temporal_width_from_combined(self, combined: np.ndarray) -> int:
-        static_width = len(self.static_feature_names)
-        return combined.shape[1] - static_width
-
     @staticmethod
     def _plot_summary(
         shap_values: shap.Explanation,
-        values: np.ndarray,
-        feature_names: list[str],
         output_path: Path,
     ) -> None:
         plt.figure(figsize=(10, 8))
         shap.summary_plot(
             shap_values.values,
-            values,
-            feature_names=feature_names,
+            shap_values.data,
+            feature_names=shap_values.feature_names,
             show=False,
             max_display=25,
         )
@@ -205,13 +198,12 @@ class HybridModelExplainer:
     def _local_plain_language_explanations(
         self,
         shap_values: shap.Explanation,
-        values: np.ndarray,
+        predictions: np.ndarray,
         feature_names: list[str],
         borrower_ids: np.ndarray | None = None,
         top_n: int = 5,
     ) -> list[dict[str, object]]:
         explanations: list[dict[str, object]] = []
-        predictions = self._predict_combined(values)
 
         for row_index, row_values in enumerate(shap_values.values):
             top_indices = np.argsort(np.abs(row_values))[-top_n:][::-1]
@@ -221,7 +213,7 @@ class HybridModelExplainer:
                 drivers.append(
                     {
                         "feature": feature_names[feature_index],
-                        "value": float(values[row_index, feature_index]),
+                        "value": float(shap_values.data[row_index, feature_index]),
                         "shap_value": float(row_values[feature_index]),
                         "plain_language": (
                             f"{feature_names[feature_index]} {direction} the "
@@ -269,13 +261,21 @@ class HybridModelExplainer:
     def _plot_local_explanations(
         self,
         shap_values: shap.Explanation,
-        feature_names: list[str],
         max_plots: int = 10,
     ) -> None:
-        """Generate local explanations. Waterfall and force plots skipped for KernelExplainer."""
-        # Waterfall and force plots require native shap.Explanation objects
-        # For KernelExplainer, we generate JSON explanations instead (handled in explain method)
-        LOGGER.info("Local explanations stored in JSON format for compatibility")
+        """Save native SHAP waterfall plots for the first ``max_plots`` rows.
+
+        Unlike KernelExplainer's manually-wrapped output, ``shap_values``
+        here is a real ``shap.Explanation``, so ``shap.plots.waterfall``
+        works directly.
+        """
+        for row_index in range(min(max_plots, len(shap_values))):
+            plt.figure()
+            shap.plots.waterfall(shap_values[row_index], max_display=15, show=False)
+            plt.tight_layout()
+            plt.savefig(self.waterfall_dir / f"borrower_{row_index}.png", dpi=150, bbox_inches="tight")
+            plt.close()
+        LOGGER.info("Saved %d waterfall plots to %s", min(max_plots, len(shap_values)), self.waterfall_dir)
 
 
 def load_trained_model(model_path: str | Path) -> tf.keras.Model:
