@@ -1,0 +1,149 @@
+{
+  "shares": {
+    "hybrid": {
+      "temporal": 0.12020871949729375,
+      "static": 0.8797912805027063
+    },
+    "transformer": {
+      "temporal": 0.8685309966495229,
+      "static": 0.1314690033504771
+    }
+  },
+  "xgboost": {
+    "borrower_index": 311,
+    "predicted_probability": 0.6487137079238892,
+    "n_trees": 300,
+    "path": [
+      0,
+      1,
+      3,
+      7,
+      11
+    ],
+    "nodes": [
+      {
+        "nodeid": 0,
+        "depth": 0,
+        "parent": null,
+        "is_leaf": false,
+        "feature": "liquidity_score_t10",
+        "threshold": 4.78594828,
+        "yes": 1,
+        "no": 2,
+        "missing": 2
+      },
+      {
+        "nodeid": 1,
+        "depth": 1,
+        "parent": 0,
+        "is_leaf": false,
+        "feature": "balance_volatility_t6",
+        "threshold": 180449.859,
+        "yes": 3,
+        "no": 4,
+        "missing": 4
+      },
+      {
+        "nodeid": 3,
+        "depth": 2,
+        "parent": 1,
+        "is_leaf": false,
+        "feature": "average_balance_t3",
+        "threshold": 1412463.25,
+        "yes": 7,
+        "no": 8,
+        "missing": 8
+      },
+      {
+        "nodeid": 7,
+        "depth": 3,
+        "parent": 3,
+        "is_leaf": false,
+        "feature": "expenditure_ratio_t4",
+        "threshold": 2.84090543,
+        "yes": 11,
+        "no": 12,
+        "missing": 12
+      },
+      {
+        "nodeid": 11,
+        "depth": 4,
+        "parent": 7,
+        "is_leaf": true,
+        "leaf_value": 0.0691579804
+      },
+      {
+        "nodeid": 12,
+        "depth": 4,
+        "parent": 7,
+        "is_leaf": true,
+        "leaf_value": -0.0236318409
+      },
+      {
+        "nodeid": 8,
+        "depth": 3,
+        "parent": 3,
+        "is_leaf": true,
+        "leaf_value": -0.0935483873
+      },
+      {
+        "nodeid": 4,
+        "depth": 2,
+        "parent": 1,
+        "is_leaf": false,
+        "feature": "median_transaction_t5",
+        "threshold": 44210.5,
+        "yes": 9,
+        "no": 10,
+        "missing": 10
+      },
+      {
+        "nodeid": 9,
+        "depth": 3,
+        "parent": 4,
+        "is_leaf": true,
+        "leaf_value": 0.0724719092
+      },
+      {
+        "nodeid": 10,
+        "depth": 3,
+        "parent": 4,
+        "is_leaf": true,
+        "leaf_value": -0.0976190493
+      },
+      {
+        "nodeid": 2,
+        "depth": 1,
+        "parent": 0,
+        "is_leaf": false,
+        "feature": "behaviour_score_t8",
+        "threshold": 0.349452704,
+        "yes": 5,
+        "no": 6,
+        "missing": 6
+      },
+      {
+        "nodeid": 5,
+        "depth": 2,
+        "parent": 2,
+        "is_leaf": true,
+        "leaf_value": 0.0912772641
+      },
+      {
+        "nodeid": 6,
+        "depth": 2,
+        "parent": 2,
+        "is_leaf": true,
+        "leaf_value": -0.0996896848
+      }
+    ],
+    "sample_values": {
+      "liquidity_score_t10": 0.14075854887951814,
+      "balance_volatility_t6": 70387.95761937149,
+      "average_balance_t3": 431421.75,
+      "expenditure_ratio_t4": 0.5332783944114122,
+      "median_transaction_t5": 33440.0,
+      "behaviour_score_t8": 0.463608317811501
+    }
+  }
+}

@@ -28,10 +28,16 @@ that held it out (out-of-fold, consistent with how the rest of this project is e
    Integrated Gradients attribution (two heads: increased-risk / decreased-risk features).
    Self-contained (jQuery/D3 inlined) — BertViz's default output depends on three CDN scripts at
    render time, which this rewrites away so it works offline like everything else here.
-6. `images/attention/` — 8 PNGs backing the attention study.
-7. `images/integrated_gradients/` — 4 PNGs backing the IG study.
-8. `data/` — raw per-feature IG attribution CSVs, plus the JSON payload behind the interactive
-   explorer.
+6. [attribution_flow.html](attribution_flow.html) — two honest alternatives to a "chain-of-thought"
+   view (neither model generates intermediate reasoning tokens the way an LLM does): a Sankey
+   diagram of how much of each branch's information reaches the final prediction (ablation-based,
+   reliable for both models — reuses the same shares from `03_cross_pollination_experiment.md`),
+   and, for XGBoost specifically, one borrower's actual decision path through one tree of the
+   ensemble, since a real step-by-step reasoning chain genuinely exists there.
+7. `images/attention/` — 8 PNGs backing the attention study.
+8. `images/integrated_gradients/` — 4 PNGs backing the IG study.
+9. `data/` — raw per-feature IG attribution CSVs, plus the JSON payloads behind the interactive
+   explorer and the attribution-flow diagrams.
 
 ## Headline finding
 

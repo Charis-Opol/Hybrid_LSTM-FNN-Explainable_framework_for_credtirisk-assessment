@@ -1,0 +1,477 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Attribution Flow &amp; Decision Path</title>
+<style>
+  :root {
+    --ink: #1b1f27; --paper: #f6f2ea; --paper-raised: #ffffff;
+    --accent: #b9812f; --accent-soft: #e4c894;
+    --risk: #ab4a3d; --risk-soft: #ecd9d4;
+    --safe: #3c7a80; --safe-soft: #d8e6e5;
+    --temporal: #5b7fa6; --temporal-soft: #d9e3ee;
+    --line: #d8d0c0; --line-strong: #b9ae95;
+    --text: #2a2620; --text-dim: #6b6355;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #eae4d8; --paper: #17181b; --paper-raised: #1f2024;
+      --accent: #d9a352; --accent-soft: #4a3a1e;
+      --risk: #d9776a; --risk-soft: #3c2523;
+      --safe: #6fb0b4; --safe-soft: #1f3436;
+      --temporal: #8fb0d6; --temporal-soft: #223045;
+      --line: #34353a; --line-strong: #46474d;
+      --text: #e7e1d4; --text-dim: #9b9486;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--text);
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif; padding: 28px 32px 80px; }
+  .serif { font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif; }
+  .mono { font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace; font-variant-numeric: tabular-nums; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  h2 { font-size: 16px; margin: 0 0 4px; }
+  .intro { color: var(--text-dim); max-width: 72ch; font-size: 13px; margin-bottom: 24px; }
+  section { background: var(--paper-raised); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 24px; }
+  section > .subtitle { font-size: 12.5px; color: var(--text-dim); margin: 0 0 16px; max-width: 80ch; }
+  .sankey-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 760px) { .sankey-grid { grid-template-columns: 1fr; } }
+  .sankey-card h3 { font-size: 14px; margin: 0 0 2px; text-align: center; }
+  .sankey-card .risk-note { font-size: 11.5px; color: var(--text-dim); text-align: center; margin-bottom: 8px; }
+  .legend { display: flex; gap: 18px; justify-content: center; font-size: 11.5px; color: var(--text-dim); margin-top: 10px; }
+  .legend .swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; margin-right: 5px; }
+  .tree-wrap { overflow-x: auto; }
+  .tree-caption { font-size: 12px; color: var(--text-dim); margin-top: 10px; }
+  .path-narrative { list-style: none; margin: 14px 0 0; padding: 0; font-size: 12.5px; }
+  .path-narrative li { padding: 5px 0 5px 16px; border-left: 2px solid var(--line-strong); margin-left: 4px; }
+  .path-narrative li.leaf { border-left-color: var(--accent); font-weight: 600; }
+  .path-narrative .feat { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+  .path-narrative .dir { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+  <h1 class="serif">Attribution Flow &amp; Decision Path</h1>
+  <p class="intro">Two honest alternatives to a "chain-of-thought" view -- none of these models generate
+  intermediate reasoning tokens the way an LLM does, so there's nothing literal to visualize as a
+  reasoning trace. What's shown instead: how much of each branch's information actually survives to
+  the final prediction (Sankey, from the ablation study), and, for the one model here where a real
+  step-by-step decision chain genuinely exists, one borrower's actual path through one tree of the
+  XGBoost ensemble.</p>
+
+  <section>
+    <h2 class="serif">Attribution flow: branch → fusion → prediction</h2>
+    <p class="subtitle">Flow width = the ablation-based branch share (1 − correlation with real
+    predictions when that branch is replaced by the training-fold mean). Reliable for both models,
+    unlike per-feature Integrated Gradients, which didn't converge for most transformer borrowers.</p>
+    <div class="sankey-grid">
+      <div class="sankey-card">
+        <h3>Hybrid LSTM-GRU-Attention</h3>
+        <div class="risk-note">Static branch carries ~88% of what reaches the prediction</div>
+        <svg id="sankeyHybrid" viewBox="0 0 380 200" style="width:100%;height:auto;"></svg>
+      </div>
+      <div class="sankey-card">
+        <h3>Transformer-Encoder Hybrid</h3>
+        <div class="risk-note">Temporal branch carries ~87% of what reaches the prediction</div>
+        <svg id="sankeyTransformer" viewBox="0 0 380 200" style="width:100%;height:auto;"></svg>
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--temporal)"></span>Temporal branch</span>
+      <span><span class="swatch" style="background:var(--accent)"></span>Static branch</span>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="serif">XGBoost — one borrower's actual decision path</h2>
+    <p class="subtitle" id="treeSubtitle"></p>
+    <div class="tree-wrap">
+      <svg id="treeSvg" style="width:100%;height:auto;"></svg>
+    </div>
+    <ol class="path-narrative" id="pathNarrative"></ol>
+    <p class="tree-caption">Tree 1 of 300 in the ensemble — the final prediction sums a small
+    contribution from every tree, so this path explains a slice of the decision, not the whole of it.
+    Grey nodes/edges are the rest of this tree, not taken by this borrower.</p>
+  </section>
+
+  <script id="data-json" type="application/json">{
+  "shares": {
+    "hybrid": {
+      "temporal": 0.12020871949729375,
+      "static": 0.8797912805027063
+    },
+    "transformer": {
+      "temporal": 0.8685309966495229,
+      "static": 0.1314690033504771
+    }
+  },
+  "xgboost": {
+    "borrower_index": 311,
+    "predicted_probability": 0.6487137079238892,
+    "n_trees": 300,
+    "path": [
+      0,
+      1,
+      3,
+      7,
+      11
+    ],
+    "nodes": [
+      {
+        "nodeid": 0,
+        "depth": 0,
+        "parent": null,
+        "is_leaf": false,
+        "feature": "liquidity_score_t10",
+        "threshold": 4.78594828,
+        "yes": 1,
+        "no": 2,
+        "missing": 2
+      },
+      {
+        "nodeid": 1,
+        "depth": 1,
+        "parent": 0,
+        "is_leaf": false,
+        "feature": "balance_volatility_t6",
+        "threshold": 180449.859,
+        "yes": 3,
+        "no": 4,
+        "missing": 4
+      },
+      {
+        "nodeid": 3,
+        "depth": 2,
+        "parent": 1,
+        "is_leaf": false,
+        "feature": "average_balance_t3",
+        "threshold": 1412463.25,
+        "yes": 7,
+        "no": 8,
+        "missing": 8
+      },
+      {
+        "nodeid": 7,
+        "depth": 3,
+        "parent": 3,
+        "is_leaf": false,
+        "feature": "expenditure_ratio_t4",
+        "threshold": 2.84090543,
+        "yes": 11,
+        "no": 12,
+        "missing": 12
+      },
+      {
+        "nodeid": 11,
+        "depth": 4,
+        "parent": 7,
+        "is_leaf": true,
+        "leaf_value": 0.0691579804
+      },
+      {
+        "nodeid": 12,
+        "depth": 4,
+        "parent": 7,
+        "is_leaf": true,
+        "leaf_value": -0.0236318409
+      },
+      {
+        "nodeid": 8,
+        "depth": 3,
+        "parent": 3,
+        "is_leaf": true,
+        "leaf_value": -0.0935483873
+      },
+      {
+        "nodeid": 4,
+        "depth": 2,
+        "parent": 1,
+        "is_leaf": false,
+        "feature": "median_transaction_t5",
+        "threshold": 44210.5,
+        "yes": 9,
+        "no": 10,
+        "missing": 10
+      },
+      {
+        "nodeid": 9,
+        "depth": 3,
+        "parent": 4,
+        "is_leaf": true,
+        "leaf_value": 0.0724719092
+      },
+      {
+        "nodeid": 10,
+        "depth": 3,
+        "parent": 4,
+        "is_leaf": true,
+        "leaf_value": -0.0976190493
+      },
+      {
+        "nodeid": 2,
+        "depth": 1,
+        "parent": 0,
+        "is_leaf": false,
+        "feature": "behaviour_score_t8",
+        "threshold": 0.349452704,
+        "yes": 5,
+        "no": 6,
+        "missing": 6
+      },
+      {
+        "nodeid": 5,
+        "depth": 2,
+        "parent": 2,
+        "is_leaf": true,
+        "leaf_value": 0.0912772641
+      },
+      {
+        "nodeid": 6,
+        "depth": 2,
+        "parent": 2,
+        "is_leaf": true,
+        "leaf_value": -0.0996896848
+      }
+    ],
+    "sample_values": {
+      "liquidity_score_t10": 0.14075854887951814,
+      "balance_volatility_t6": 70387.95761937149,
+      "average_balance_t3": 431421.75,
+      "expenditure_ratio_t4": 0.5332783944114122,
+      "median_transaction_t5": 33440.0,
+      "behaviour_score_t8": 0.463608317811501
+    }
+  }
+}</script>
+  <script>
+    const DATA = JSON.parse(document.getElementById('data-json').textContent);
+
+    function styleVar(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function drawSankey(svgId, shares) {
+      const svg = document.getElementById(svgId);
+      const W = 380, H = 200;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const ns = 'http://www.w3.org/2000/svg';
+      const bandTop = 20, bandHeight = 160;
+      const temporalH = shares.temporal * bandHeight;
+      const staticH = shares.static * bandHeight;
+
+      const xLeft = 10, wLeft = 90;
+      const xFusion = 160, wFusion = 60;
+      const xPred = 300, wPred = 70;
+
+      const temporalColor = styleVar('--temporal');
+      const staticColor = styleVar('--accent');
+      const inkColor = styleVar('--text');
+      const paperRaised = styleVar('--paper-raised');
+      const lineColor = styleVar('--line-strong');
+
+      function rect(x, y, w, h, fill, label, sub) {
+        const g = document.createElementNS(ns, 'g');
+        const r = document.createElementNS(ns, 'rect');
+        r.setAttribute('x', x); r.setAttribute('y', y);
+        r.setAttribute('width', w); r.setAttribute('height', Math.max(h, 2));
+        r.setAttribute('rx', 4); r.setAttribute('fill', fill);
+        g.appendChild(r);
+        if (label) {
+          const t = document.createElementNS(ns, 'text');
+          t.setAttribute('x', x + w / 2); t.setAttribute('y', y + h / 2 - (sub ? 4 : 0));
+          t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+          t.setAttribute('font-size', '10.5'); t.setAttribute('fill', paperRaised);
+          t.setAttribute('font-weight', '600');
+          t.textContent = label;
+          g.appendChild(t);
+          if (sub) {
+            const t2 = document.createElementNS(ns, 'text');
+            t2.setAttribute('x', x + w / 2); t2.setAttribute('y', y + h / 2 + 10);
+            t2.setAttribute('text-anchor', 'middle'); t2.setAttribute('dominant-baseline', 'middle');
+            t2.setAttribute('font-size', '9.5'); t2.setAttribute('fill', paperRaised); t2.setAttribute('opacity', '0.85');
+            t2.textContent = sub;
+            g.appendChild(t2);
+          }
+        }
+        svg.appendChild(g);
+        return { x, y, w, h };
+      }
+
+      function ribbon(x1, y1, h1, x2, y2, h2, fill) {
+        const midX = (x1 + x2) / 2;
+        const path = document.createElementNS(ns, 'path');
+        const d = `M ${x1} ${y1} C ${midX} ${y1}, ${midX} ${y2}, ${x2} ${y2} ` +
+                  `L ${x2} ${y2 + h2} C ${midX} ${y2 + h2}, ${midX} ${y1 + h1}, ${x1} ${y1 + h1} Z`;
+        path.setAttribute('d', d);
+        path.setAttribute('fill', fill);
+        path.setAttribute('opacity', '0.55');
+        svg.appendChild(path);
+      }
+
+      const temporalY = bandTop;
+      const staticY = bandTop + temporalH;
+      const fusionY = bandTop;
+      const fusionH = bandHeight;
+
+      ribbon(xLeft + wLeft, temporalY, temporalH, xFusion, fusionY, temporalH, temporalColor);
+      ribbon(xLeft + wLeft, staticY, staticH, xFusion, fusionY + temporalH, staticH, staticColor);
+      ribbon(xFusion + wFusion, fusionY, fusionH, xPred, fusionY, fusionH, lineColor);
+
+      rect(xLeft, temporalY, wLeft, temporalH, temporalColor, 'Temporal', (shares.temporal * 100).toFixed(0) + '%');
+      rect(xLeft, staticY, wLeft, staticH, staticColor, 'Static', (shares.static * 100).toFixed(0) + '%');
+      rect(xFusion, fusionY, wFusion, fusionH, inkColor, 'Fusion');
+      rect(xPred, fusionY, wPred, fusionH, inkColor, 'Prediction');
+    }
+
+    drawSankey('sankeyHybrid', DATA.shares.hybrid);
+    drawSankey('sankeyTransformer', DATA.shares.transformer);
+
+    function drawTree() {
+      const nodes = DATA.xgboost.nodes;
+      const path = new Set(DATA.xgboost.path);
+      const byId = Object.fromEntries(nodes.map(n => [n.nodeid, n]));
+      const root = byId[0];
+
+      // Leaf x-order must follow the tree's actual left(yes)-to-right(no)
+      // structure, not numeric nodeid order -- XGBoost's ids are assigned
+      // breadth-first, not in left-to-right leaf order, so sorting by id
+      // would scatter siblings apart and produce crossing edges.
+      const leafOrder = [];
+      (function collect(node) {
+        if (node.is_leaf) { leafOrder.push(node.nodeid); return; }
+        collect(byId[node.yes]);
+        collect(byId[node.no]);
+      })(root);
+      const leafX = {};
+      leafOrder.forEach((id, i) => { leafX[id] = i; });
+
+      function computeX(node) {
+        if (node.is_leaf) return leafX[node.nodeid];
+        const children = nodes.filter(n => n.parent === node.nodeid);
+        const xs = children.map(computeX);
+        return xs.reduce((a, b) => a + b, 0) / xs.length;
+      }
+      const xPos = {};
+      nodes.forEach(n => { xPos[n.nodeid] = computeX(n); });
+
+      const colWidth = 130, rowHeight = 78;
+      const maxDepth = Math.max(...nodes.map(n => n.depth));
+      const W = (leaves.length) * colWidth + 40;
+      const H = (maxDepth + 1) * rowHeight + 40;
+
+      const svg = document.getElementById('treeSvg');
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      const ns = 'http://www.w3.org/2000/svg';
+
+      const accent = styleVar('--accent');
+      const lineColor = styleVar('--line');
+      const lineStrong = styleVar('--line-strong');
+      const paperRaised = styleVar('--paper-raised');
+      const textColor = styleVar('--text');
+      const riskSoft = styleVar('--risk-soft');
+      const risk = styleVar('--risk');
+      const safeSoft = styleVar('--safe-soft');
+      const safe = styleVar('--safe');
+
+      function pos(node) {
+        return { x: xPos[node.nodeid] * colWidth + colWidth / 2 + 20, y: node.depth * rowHeight + 30 };
+      }
+
+      // Edges first (so nodes draw on top)
+      nodes.forEach(n => {
+        if (n.parent === null) return;
+        const parent = byId[n.parent];
+        const p1 = pos(parent), p2 = pos(n);
+        const onPath = path.has(parent.nodeid) && path.has(n.nodeid);
+        const line = document.createElementNS(ns, 'path');
+        const d = `M ${p1.x} ${p1.y + 16} C ${p1.x} ${(p1.y + p2.y) / 2}, ${p2.x} ${(p1.y + p2.y) / 2}, ${p2.x} ${p2.y - 16}`;
+        line.setAttribute('d', d);
+        line.setAttribute('fill', 'none');
+        line.setAttribute('stroke', onPath ? accent : lineColor);
+        line.setAttribute('stroke-width', onPath ? 2.5 : 1.25);
+        svg.appendChild(line);
+      });
+
+      nodes.forEach(n => {
+        const p = pos(n);
+        const onPath = path.has(n.nodeid);
+        const g = document.createElementNS(ns, 'g');
+
+        if (n.is_leaf) {
+          const positive = n.leaf_value >= 0;
+          const rect = document.createElementNS(ns, 'rect');
+          rect.setAttribute('x', p.x - 46); rect.setAttribute('y', p.y - 15);
+          rect.setAttribute('width', 92); rect.setAttribute('height', 30);
+          rect.setAttribute('rx', 6);
+          rect.setAttribute('fill', onPath ? (positive ? riskSoft : safeSoft) : styleVar('--paper'));
+          rect.setAttribute('stroke', onPath ? (positive ? risk : safe) : lineColor);
+          rect.setAttribute('stroke-width', onPath ? 2 : 1);
+          g.appendChild(rect);
+          const t = document.createElementNS(ns, 'text');
+          t.setAttribute('x', p.x); t.setAttribute('y', p.y);
+          t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+          t.setAttribute('font-size', '11'); t.setAttribute('font-family', 'ui-monospace, Consolas, monospace');
+          t.setAttribute('fill', onPath ? (positive ? risk : safe) : styleVar('--text-dim'));
+          t.textContent = (positive ? '+' : '') + n.leaf_value.toFixed(3);
+          g.appendChild(t);
+        } else {
+          const rect = document.createElementNS(ns, 'rect');
+          rect.setAttribute('x', p.x - 58); rect.setAttribute('y', p.y - 16);
+          rect.setAttribute('width', 116); rect.setAttribute('height', 32);
+          rect.setAttribute('rx', 6);
+          rect.setAttribute('fill', onPath ? accent : paperRaised);
+          rect.setAttribute('stroke', onPath ? accent : lineStrong);
+          rect.setAttribute('stroke-width', 1.25);
+          g.appendChild(rect);
+          const t = document.createElementNS(ns, 'text');
+          t.setAttribute('x', p.x); t.setAttribute('y', p.y - 4);
+          t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+          t.setAttribute('font-size', '9'); t.setAttribute('font-family', 'ui-monospace, Consolas, monospace');
+          t.setAttribute('fill', onPath ? paperRaised : textColor);
+          t.setAttribute('font-weight', '600');
+          const shortName = n.feature.length > 18 ? n.feature.slice(0, 17) + '…' : n.feature;
+          t.textContent = shortName;
+          g.appendChild(t);
+          const t2 = document.createElementNS(ns, 'text');
+          t2.setAttribute('x', p.x); t2.setAttribute('y', p.y + 9);
+          t2.setAttribute('text-anchor', 'middle'); t2.setAttribute('dominant-baseline', 'middle');
+          t2.setAttribute('font-size', '9'); t2.setAttribute('font-family', 'ui-monospace, Consolas, monospace');
+          t2.setAttribute('fill', onPath ? paperRaised : styleVar('--text-dim'));
+          t2.textContent = '< ' + n.threshold.toPrecision(4);
+          g.appendChild(t2);
+        }
+        svg.appendChild(g);
+      });
+    }
+    drawTree();
+
+    function renderNarrative() {
+      const nodes = DATA.xgboost.nodes;
+      const byId = Object.fromEntries(nodes.map(n => [n.nodeid, n]));
+      const path = DATA.xgboost.path;
+      const values = DATA.xgboost.sample_values;
+      const list = document.getElementById('pathNarrative');
+
+      document.getElementById('treeSubtitle').textContent =
+        `Borrower #${DATA.xgboost.borrower_index} — this tree alone scores their leaf value below; ` +
+        `predicted default probability across the full 300-tree ensemble is ${(DATA.xgboost.predicted_probability * 100).toFixed(1)}%.`;
+
+      for (let i = 0; i < path.length; i++) {
+        const node = byId[path[i]];
+        const li = document.createElement('li');
+        if (node.is_leaf) {
+          li.className = 'leaf';
+          li.textContent = `Leaf reached — this tree's contribution: ${node.leaf_value >= 0 ? '+' : ''}${node.leaf_value.toFixed(4)} (log-odds)`;
+        } else {
+          const value = values[node.feature];
+          const went = path[i + 1] === node.yes ? `< ${node.threshold.toPrecision(4)} → yes` : `≥ ${node.threshold.toPrecision(4)} → no`;
+          li.innerHTML = `<span class="feat">${node.feature}</span> = <span class="mono">${value.toPrecision(6)}</span>, ` +
+            `<span class="dir">${went}</span>`;
+        }
+        list.appendChild(li);
+      }
+    }
+    renderNarrative();
+  </script>
+</body>
+</html>
