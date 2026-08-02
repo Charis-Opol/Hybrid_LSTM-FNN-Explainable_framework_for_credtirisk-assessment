@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import pandas as pd
@@ -31,6 +32,8 @@ from config import MODELS_DIR, RANDOM_SEED
 from cross_pollinated_model import build_cross_pollinated_model
 from utils import ensure_directory, set_random_seed
 
+ModelBuilder = Callable[..., tf.keras.Model]
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -51,6 +54,7 @@ def run_kfold_cv_cross_pollinated(
     epochs: int = 100,
     batch_size: int = 128,
     random_seed: int = RANDOM_SEED,
+    model_builder: ModelBuilder = build_cross_pollinated_model,
 ) -> dict:
     """Run stratified k-fold CV over the cross-pollinated model, pooling
     OOF predictions.
@@ -86,7 +90,7 @@ def run_kfold_cv_cross_pollinated(
             test_size=0.15, random_state=random_seed, stratify=stratify,
         )
 
-        model = build_cross_pollinated_model(
+        model = model_builder(
             sequence_length=X_temporal.shape[1],
             temporal_features=X_temporal.shape[2],
             static_features=X_static.shape[1],

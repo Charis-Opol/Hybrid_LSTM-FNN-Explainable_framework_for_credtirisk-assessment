@@ -5,6 +5,7 @@
 | XGBoost | 0.9123 | 0.1331 | 0.5000 | 0.2102 | 0.1221 | 0.8866 | 0.0688 |
 | Transformer-Encoder Hybrid | 0.9200 | 0.1205 | 0.3857 | 0.1837 | 0.1029 | 0.8746 | 0.7889 |
 | Logistic Regression | 0.9177 | 0.1169 | 0.3857 | 0.1794 | 0.1034 | 0.8592 | 0.6545 |
+| Cross-Pollinated Reverse (Hybrid-temporal + Transformer-static) | 0.8703 | 0.1022 | 0.5857 | 0.1741 | 0.1118 | 0.8619 | 0.6003 |
 | Hybrid LSTM-GRU-Attention-FNN | 0.9233 | 0.1154 | 0.3429 | 0.1727 | 0.1015 | 0.8626 | 0.6847 |
 | Cross-Pollinated (Transformer-temporal + Hybrid-static) | 0.9033 | 0.1043 | 0.4143 | 0.1667 | 0.0859 | 0.8556 | 0.7402 |
 | Cross-Attention Fusion Hybrid | 0.8690 | 0.0932 | 0.5286 | 0.1585 | 0.0830 | 0.8580 | 0.6647 |

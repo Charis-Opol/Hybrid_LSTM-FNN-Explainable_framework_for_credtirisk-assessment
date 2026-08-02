@@ -113,3 +113,70 @@ def build_cross_pollinated_model(
         ],
     )
     return model
+
+
+def build_cross_pollinated_model_reverse(
+    sequence_length: int,
+    temporal_features: int,
+    static_features: int,
+    static_dense_units: int = 64,
+    fusion_dense_units: int = 64,
+    second_dense_units: int = 32,
+    dropout_rate: float = 0.3,
+    l2_reg: float = 1e-3,
+    learning_rate: float = 0.001,
+) -> tf.keras.Model:
+    """The other pairing: hybrid's GRU-Attention temporal encoder + the
+    transformer's plain Dense static branch.
+
+    Built to test whether the first cross-pollinated model's finding
+    (temporal-branch dominance persists even after swapping which static
+    encoder it's paired with) generalizes: if GRU-based temporal *still*
+    loses the branch-importance competition here -- now paired with a
+    weaker static branch than either original architecture had -- that's
+    stronger evidence this is a GRU-vs-self-attention gradient-competition
+    effect, not a property of any specific dataset stream.
+    """
+    l2 = tf.keras.regularizers.l2(l2_reg)
+
+    temporal_encoder = TemporalEncoder(
+        sequence_length=sequence_length,
+        number_of_features=temporal_features,
+    ).build()
+    temporal_input = temporal_encoder.input
+    temporal_embedding = temporal_encoder(temporal_input)
+
+    static_input = tf.keras.Input(shape=(static_features,), name="static_input")
+    s = tf.keras.layers.Dense(static_dense_units, activation="relu", kernel_regularizer=l2)(static_input)
+    s = tf.keras.layers.BatchNormalization()(s)
+    s = tf.keras.layers.Dropout(dropout_rate)(s)
+    static_embedding = tf.keras.layers.Dense(
+        static_dense_units, activation="relu", kernel_regularizer=l2, name="static_embedding",
+    )(s)
+
+    fused = tf.keras.layers.Concatenate(name="hybrid_embedding")([temporal_embedding, static_embedding])
+    f = tf.keras.layers.Dense(fusion_dense_units, activation="relu", kernel_regularizer=l2)(fused)
+    f = tf.keras.layers.BatchNormalization()(f)
+    f = tf.keras.layers.Dropout(dropout_rate)(f)
+    f = tf.keras.layers.Dense(second_dense_units, activation="relu", kernel_regularizer=l2)(f)
+    f = tf.keras.layers.BatchNormalization()(f)
+    f = tf.keras.layers.Dropout(max(dropout_rate - 0.1, 0.1))(f)
+    output = tf.keras.layers.Dense(1, activation="sigmoid", name="risk_score")(f)
+
+    model = tf.keras.Model(
+        inputs=[temporal_input, static_input],
+        outputs=output,
+        name="cross_pollinated_model_reverse",
+    )
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
+        loss=tf.keras.losses.BinaryCrossentropy(),
+        metrics=[
+            tf.keras.metrics.AUC(name="auc"),
+            tf.keras.metrics.Precision(name="precision"),
+            tf.keras.metrics.Recall(name="recall"),
+            tf.keras.metrics.BinaryAccuracy(name="accuracy"),
+            F1Score(name="f1"),
+        ],
+    )
+    return model

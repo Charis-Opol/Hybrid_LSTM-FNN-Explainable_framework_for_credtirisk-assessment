@@ -3,6 +3,7 @@
 | Model | Base Rate | Avg. Precision | Lift over Random |
 | --- | --- | --- | --- |
 | XGBoost | 0.0233 | 0.1221 | 5.2327 |
+| Cross-Pollinated Reverse (Hybrid-temporal + Transformer-static) | 0.0233 | 0.1118 | 4.7906 |
 | Logistic Regression | 0.0233 | 0.1034 | 4.4313 |
 | Transformer-Encoder Hybrid | 0.0233 | 0.1029 | 4.4103 |
 | Hybrid LSTM-GRU-Attention-FNN | 0.0233 | 0.1015 | 4.3485 |
