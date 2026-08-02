@@ -11,9 +11,17 @@ that held it out (out-of-fold, consistent with how the rest of this project is e
 2. [02_integrated_gradients_study.md](02_integrated_gradients_study.md) — Integrated Gradients
    feature attribution, implemented natively against the Keras models (Captum is PyTorch-only
    and can't attach to them).
-3. `images/attention/` — 8 PNGs backing the attention study.
-4. `images/integrated_gradients/` — 4 PNGs backing the IG study.
-5. `data/` — raw per-feature IG attribution CSVs.
+3. [03_cross_pollination_experiment.md](03_cross_pollination_experiment.md) — follow-up
+   architecture experiment: pairing each model's *dominant* branch with the other's, and the
+   clean 2×2 result showing GRU-based temporal encoding loses the branch-competition regardless
+   of which static branch it's paired with.
+4. [borrower_explorer.html](borrower_explorer.html) — interactive tool: pick any of the 260
+   explained borrowers and compare the hybrid vs. transformer columns side by side (open
+   directly in a browser, no server needed).
+5. `images/attention/` — 8 PNGs backing the attention study.
+6. `images/integrated_gradients/` — 4 PNGs backing the IG study.
+7. `data/` — raw per-feature IG attribution CSVs, plus the JSON payload behind the interactive
+   explorer.
 
 ## Headline finding
 
