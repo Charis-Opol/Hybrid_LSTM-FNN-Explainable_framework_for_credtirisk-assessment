@@ -18,11 +18,16 @@ that held it out (out-of-fold, consistent with how the rest of this project is e
 4. [borrower_explorer.html](borrower_explorer.html) — interactive tool: pick any of the 260
    explained borrowers and compare the hybrid vs. transformer columns side by side (open
    directly in a browser, no server needed).
-5. [bertviz_attention_views.html](bertviz_attention_views.html) — BertViz head-view/model-view
-   of the real per-head attention weights (not the head-averaged versions used elsewhere), for
-   one representative defaulter and one non-defaulter, both models. Self-contained (jQuery/D3
-   inlined) — BertViz's default output depends on three CDN scripts at render time, which this
-   rewrites away so it works offline like everything else here.
+5. [bertviz_attention_views.html](bertviz_attention_views.html) — two kinds of BertViz view, for
+   one representative defaulter and one non-defaulter, both models:
+   (a) head-view/model-view of the real per-head attention weights over the 12 months (not the
+   head-averaged versions used elsewhere), and
+   (b) "features driving the decision" — since neither model has any attention mechanism between
+   individual raw features (only between the 12 monthly time steps), this repurposes BertViz's
+   sentence-pair display as a [DECISION] → feature view, with attention weight = that borrower's
+   Integrated Gradients attribution (two heads: increased-risk / decreased-risk features).
+   Self-contained (jQuery/D3 inlined) — BertViz's default output depends on three CDN scripts at
+   render time, which this rewrites away so it works offline like everything else here.
 6. `images/attention/` — 8 PNGs backing the attention study.
 7. `images/integrated_gradients/` — 4 PNGs backing the IG study.
 8. `data/` — raw per-feature IG attribution CSVs, plus the JSON payload behind the interactive

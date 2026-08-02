@@ -1,14 +1,16 @@
 #!/usr/bin/env python
-"""Render BertViz head-view / model-view visualizations of the transformer
-and hybrid models' attention, relabeling BertViz's "tokens" as months
-("M1".."M12") since these aren't NLP models.
+"""Render BertViz visualizations for the transformer and hybrid models:
+per-borrower attention over the 12 monthly time steps ("M1".."M12" as
+BertViz "tokens"), and a repurposed view of which raw features drove the
+decision (see feature_attention_tokens_and_matrix -- not real attention,
+there's no mechanism between individual features in either model).
 
 BertViz's generated HTML depends on three CDN-hosted libraries at render
 time (require.js, d3.js, jquery) -- fine inside a live notebook, but this
 project's other interpretability artifacts (borrower_explorer.html) are
 fully self-contained and work offline. To match that, this script:
-  1. Uses locally-fetched copies of require.js/d3.js/jquery (see
-     download_bertviz_assets.py) inlined as plain <script> tags.
+  1. Uses locally-fetched copies of require.js/d3.js/jquery inlined as
+     plain <script> tags.
   2. Rewrites each visualization's `requirejs(['jquery','d3'], function ($,
      d3) { ... });` wrapper (BertViz's AMD-style module loading, which
      needs require.js's async loader) into a plain IIFE `(function ($, d3)
@@ -33,6 +35,7 @@ from config import RANDOM_SEED
 from run_experiment_evaluation_comparison import DATA_PATH, build_training_arrays, load_and_normalize_dataset
 
 INTERP_DIR = Path("models/uganda_mobile_money_evaluation_comparison/interpretability")
+IG_DIR = Path("models/uganda_mobile_money_evaluation_comparison/integrated_gradients")
 OUT_DIR = Path("models/uganda_mobile_money_evaluation_comparison/interpretability_report")
 ASSETS_DIR = Path(
     r"C:\Users\chari\AppData\Local\Temp\claude\c--Users-chari-Desktop-Hybrid-LSTM-FNN-Explainable-framework-for-credtirisk-assessment"
@@ -71,6 +74,48 @@ def per_head_attention(model_name: str, index: int, fold_number: int, X_temporal
     return [torch.from_numpy(np.asarray(layer)).float() for layer in attention_layers]
 
 
+def reliable_ig_borrowers(model_name: str) -> np.ndarray:
+    deltas = np.load(IG_DIR / model_name / "convergence_deltas.npy")
+    return ~np.isnan(deltas) & (np.abs(deltas) < 1.0)
+
+
+def feature_attention_tokens_and_matrix(model_name: str, index: int, temporal_names: list[str], static_names: list[str]):
+    """BertViz visualizes pairwise attention between sequence positions --
+    there's no such mechanism between individual raw features anywhere in
+    these models (MultiHeadAttention only runs over the 12 monthly time
+    steps). This repurposes BertViz's sentence-pair cross-attention view
+    (normally "sentence A -> sentence B") as a "[DECISION] -> feature"
+    view instead: a single virtual token attending to each of the 47 raw
+    features, with the "attention weight" being that feature's Integrated
+    Gradients attribution for this borrower (not real self-attention).
+    Two heads carry direction, since IG attributions are signed and
+    BertViz's colour scale assumes non-negative weights:
+      head 0 = features that increased predicted risk
+      head 1 = features that decreased predicted risk
+    Each head is normalized by its own max magnitude for this borrower.
+    """
+    ig_temporal = np.load(IG_DIR / model_name / "ig_temporal.npy")[index]  # (12, 35)
+    ig_static = np.load(IG_DIR / model_name / "ig_static.npy")[index]  # (12,)
+
+    temporal_attribution = ig_temporal.sum(axis=0)  # collapse months -> one value per raw temporal feature
+    combined = np.concatenate([temporal_attribution, ig_static])
+    combined_names = list(temporal_names) + list(static_names)
+
+    positive = np.clip(combined, 0, None)
+    negative = np.clip(-combined, 0, None)
+    positive = positive / max(positive.max(), 1e-9)
+    negative = negative / max(negative.max(), 1e-9)
+
+    n_features = len(combined_names)
+    n_tokens = n_features + 1  # +1 for the [DECISION] token at position 0
+    attention = np.zeros((1, 2, n_tokens, n_tokens), dtype=np.float32)
+    attention[0, 0, 0, 1:] = positive
+    attention[0, 1, 0, 1:] = negative
+
+    tokens = ["[DECISION]"] + combined_names
+    return tokens, [torch.from_numpy(attention)]
+
+
 def rewrite_for_offline(html: str) -> str:
     """Strip the require.js <script src> tag and require.config call, and
     convert the requirejs(['jquery','d3'], function ($, d3) {...}); wrapper
@@ -106,12 +151,22 @@ def main() -> None:
 
     data = load_and_normalize_dataset(DATA_PATH)
     data = data.sort_values(["borrower_id", "transaction_date"]).reset_index(drop=True)
-    X_temporal, X_static, labels, *_ = build_training_arrays(data)
+    X_temporal, X_static, labels, _, temporal_names, static_names, _ = build_training_arrays(data)
 
     pos = np.where(transformer_true == 1)[0]
     neg = np.where(transformer_true == 0)[0]
     defaulter = int(pos[np.argmax(transformer_risk[pos])])
     non_defaulter = int(neg[np.argmin(transformer_risk[neg])])
+
+    # Feature-attention view needs a borrower with reliable IG convergence
+    # for *both* models (see 02_integrated_gradients_study.md -- most
+    # transformer borrowers don't converge), so it's picked separately.
+    both_reliable = reliable_ig_borrowers("hybrid") & reliable_ig_borrowers("transformer")
+    reliable_index = np.where(both_reliable)[0]
+    reliable_pos = reliable_index[transformer_true[reliable_index] == 1]
+    reliable_neg = reliable_index[transformer_true[reliable_index] == 0]
+    ig_defaulter = int(reliable_pos[np.argmax(transformer_risk[reliable_pos])])
+    ig_non_defaulter = int(reliable_neg[np.argmin(transformer_risk[reliable_neg])])
 
     sections = []
     for label, index in [("Defaulter", defaulter), ("Non-defaulter", non_defaulter)]:
@@ -143,6 +198,25 @@ def main() -> None:
             f"ablation study, this branch barely reaches the hybrid model's final prediction.",
             rewrite_for_offline(hv_hybrid.data),
         ))
+
+    feature_view_note = (
+        "Not real attention -- there's no mechanism anywhere in these models that attends between "
+        "individual raw features (MultiHeadAttention only runs over the 12 monthly time steps). This "
+        "reuses BertViz's sentence-pair cross-attention view as a [DECISION] token → 47 raw-feature "
+        "view instead, with “attention weight” = this borrower's Integrated Gradients attribution, "
+        "normalized 0-1. After it loads, pick “Sentence A -> Sentence B” from the dropdown "
+        "(the default “All” view includes an empty, meaningless feature→feature panel). "
+        "Head 0 = features that increased predicted risk, head 1 = features that decreased it."
+    )
+    for label, index in [("Defaulter", ig_defaulter), ("Non-defaulter", ig_non_defaulter)]:
+        for model_name, risk_array in [("hybrid", hybrid_risk), ("transformer", transformer_risk)]:
+            tokens, attn = feature_attention_tokens_and_matrix(model_name, index, temporal_names, static_names)
+            hv_feat = head_view(attention=attn, tokens=tokens, sentence_b_start=1, html_action="return")
+            sections.append(section(
+                f"{model_name.capitalize()} — features driving the decision — {label} (borrower #{index})",
+                f"Risk score {risk_array[index]:.3f}. {feature_view_note}",
+                rewrite_for_offline(hv_feat.data),
+            ))
 
     jquery_js = (ASSETS_DIR / "jquery.min.js").read_text(encoding="utf-8")
     d3_js = (ASSETS_DIR / "d3.min.js").read_text(encoding="utf-8")
@@ -176,10 +250,14 @@ def main() -> None:
 </head>
 <body>
   <h1 class="serif">BertViz Attention Views</h1>
-  <p class="intro">Same underlying attention weights as the static attention-matrix study, rendered with
-  BertViz's interactive head/model view -- tokens relabeled as months (M1 = oldest in the 12-month
-  window, M12 = most recent) since these are transaction-sequence models, not language models.
-  Self-contained: jQuery and D3 are inlined below, no network access needed to view.</p>
+  <p class="intro">Two kinds of view. The month views are the same underlying attention weights as the
+  static attention-matrix study, rendered with BertViz's interactive head/model view -- tokens
+  relabeled as months (M1 = oldest in the 12-month window, M12 = most recent). The
+  "features driving the decision" views are a different thing: there's no real attention between
+  raw features anywhere in these models, so those repurpose BertViz's sentence-pair display to show
+  a [DECISION] token "attending to" each feature's Integrated Gradients attribution instead --
+  see the note on each section. Self-contained: jQuery and D3 are inlined below, no network access
+  needed to view.</p>
   <script>{jquery_js}</script>
   <script>{d3_js}</script>
   {''.join(sections)}
