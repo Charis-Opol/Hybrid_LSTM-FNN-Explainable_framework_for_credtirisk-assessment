@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, HTTPException, Response, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import logging
@@ -26,6 +26,7 @@ app = FastAPI(title="Mobile Money Credit Risk API", version="1.0.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://localhost:8080"],
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -71,15 +72,15 @@ def health() -> dict:
     return {"status": "ready", "model_loaded": bool(service and service.is_loaded)}
 
 
-@app.get("/template")
-def csv_template() -> str:
+@app.get("/template", response_class=Response)
+def csv_template() -> Response:
     columns = ["borrower_id", "transaction_date", "transaction_amount", "transaction_type", "balance"]
     content = io.StringIO()
     writer = csv.writer(content)
     writer.writerow(columns)
-    writer.writerow(["UG-001", "2025-01-05", "125000", "received", "125000"])
-    writer.writerow(["UG-001", "2025-01-08", "35000", "sent", "90000"])
-    return content.getvalue()
+    for month in range(1, 13):
+        writer.writerow(["UG-001", f"2025-{month:02d}-15", 125000 + month * 1000, "received", 125000 + month * 1000])
+    return Response(content=content.getvalue(), media_type="text/csv")
 
 
 @app.post("/assess")
@@ -146,6 +147,21 @@ async def assess(
         connection.commit()
         result["assessment_id"] = cursor.lastrowid
     return result
+
+
+@app.post("/explain")
+async def explain(
+    transactions: Annotated[UploadFile, File(description="CSV containing one borrower's transactions")],
+    borrower_id: Annotated[str, Form()],
+    loan_amount: Annotated[float, Form()],
+) -> dict:
+    if not service or not service.is_loaded:
+        raise HTTPException(503, "Model not available.")
+    raw = await transactions.read()
+    try:
+        return service.explain_csv(raw, borrower_id.strip(), {"loan_amount": loan_amount})
+    except (InputError, ValueError) as error:
+        raise HTTPException(422, str(error)) from error
 
 
 @app.get("/assessments", response_model=list[Assessment])
