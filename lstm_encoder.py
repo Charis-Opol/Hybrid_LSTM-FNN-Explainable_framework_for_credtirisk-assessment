@@ -13,18 +13,22 @@ class TemporalEncoder:
         sequence_length: int,
         number_of_features: int,
         mask_value: float = 0.0,
+        cell_type: str = "gru",
         name: str = "temporal_encoder",
     ) -> None:
         self.sequence_length = sequence_length
         self.number_of_features = number_of_features
         self.mask_value = mask_value
+        if cell_type not in ("gru", "lstm"):
+            raise ValueError(f"cell_type must be 'gru' or 'lstm', got {cell_type!r}")
+        self.cell_type = cell_type
         self.name = name
 
     def build(self) -> tf.keras.Model:
-        """Build the GRU encoder model with attention.
+        """Build the recurrent encoder model with attention.
 
         Architecture:
-            Masking -> GRU(64, return_sequences=True) -> MultiHeadAttention
+            Masking -> GRU|LSTM(64, return_sequences=True) -> MultiHeadAttention
             -> GlobalAveragePooling1D -> Dense(64)
 
         Returns:
@@ -36,7 +40,10 @@ class TemporalEncoder:
             name="temporal_input",
         )
         x = tf.keras.layers.Masking(mask_value=self.mask_value)(inputs)
-        x = tf.keras.layers.GRU(
+        recurrent_layer = (
+            tf.keras.layers.GRU if self.cell_type == "gru" else tf.keras.layers.LSTM
+        )
+        x = recurrent_layer(
             64,
             return_sequences=True,
             dropout=0.3,
@@ -63,6 +70,7 @@ def build_temporal_encoder(
     sequence_length: int,
     number_of_features: int,
     mask_value: float = 0.0,
+    cell_type: str = "gru",
 ) -> tf.keras.Model:
     """Build a temporal encoder model."""
 
@@ -70,5 +78,6 @@ def build_temporal_encoder(
         sequence_length=sequence_length,
         number_of_features=number_of_features,
         mask_value=mask_value,
+        cell_type=cell_type,
     ).build()
 

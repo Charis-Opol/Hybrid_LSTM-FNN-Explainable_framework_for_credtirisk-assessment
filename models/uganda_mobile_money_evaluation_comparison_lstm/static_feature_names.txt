@@ -1,0 +1,12 @@
+loan_amount
+average_balance
+average_inflow
+average_outflow
+income_regularity
+financial_stability_score
+behaviour_score
+income_source_Unknown
+sacco_membership_Unknown
+location_Unknown
+preferred_network_Unknown
+preferred_channel_Unknown

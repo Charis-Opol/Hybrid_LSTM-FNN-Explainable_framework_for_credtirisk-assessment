@@ -1,0 +1,67 @@
+Evaluation Comparison: Hybrid (LSTM cell) vs. Logistic Regression vs. XGBoost vs. Transformers
+================================================================================
+Data source: uganda_mobile_money_master.csv
+All models untuned (default hyperparameters). 5-fold CV, pooled OOF metrics.
+Hybrid model uses an LSTM temporal encoder cell (see run_ablation_gru_vs_lstm.py).
+
+Hybrid LSTM-Attention-FNN - pooled out-of-fold metrics:
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6285
+  accuracy: 0.8667
+  precision: 0.1145
+  recall: 0.7000
+  f1: 0.1968
+  average_precision: 0.1035
+  roc_auc: 0.8816
+
+Logistic Regression - pooled out-of-fold metrics:
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6545
+  accuracy: 0.9177
+  precision: 0.1169
+  recall: 0.3857
+  f1: 0.1794
+  average_precision: 0.1034
+  roc_auc: 0.8592
+
+XGBoost - pooled out-of-fold metrics:
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.0688
+  accuracy: 0.9123
+  precision: 0.1331
+  recall: 0.5000
+  f1: 0.2102
+  average_precision: 0.1221
+  roc_auc: 0.8866
+
+Transformer-Encoder Hybrid - pooled out-of-fold metrics:
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.6357
+  accuracy: 0.8983
+  precision: 0.1173
+  recall: 0.5143
+  f1: 0.1910
+  average_precision: 0.0933
+  roc_auc: 0.8590
+
+Cross-Attention Fusion Hybrid - pooled out-of-fold metrics:
+  n_positives_total: 70
+  n_total: 3000
+  selected_threshold: 0.8514
+  accuracy: 0.9497
+  precision: 0.1653
+  recall: 0.2857
+  f1: 0.2094
+  average_precision: 0.1009
+  roc_auc: 0.8204
+
+Lift over random baseline (Average Precision / Base Rate):
+  XGBoost: base_rate=0.0233, AP=0.1221, lift=5.23x
+  Hybrid LSTM-Attention-FNN: base_rate=0.0233, AP=0.1035, lift=4.43x
+  Logistic Regression: base_rate=0.0233, AP=0.1034, lift=4.43x
+  Cross-Attention Fusion Hybrid: base_rate=0.0233, AP=0.1009, lift=4.33x
+  Transformer-Encoder Hybrid: base_rate=0.0233, AP=0.0933, lift=4.00x

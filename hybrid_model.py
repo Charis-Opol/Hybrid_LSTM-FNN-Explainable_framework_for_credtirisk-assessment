@@ -69,6 +69,7 @@ def build_hybrid_model(
     temporal_features: int,
     static_features: int,
     learning_rate: float = 0.001,
+    cell_type: str = "gru",
 ) -> tf.keras.Model:
     """Build and compile the hybrid credit risk classifier.
 
@@ -77,6 +78,7 @@ def build_hybrid_model(
         temporal_features: Number of features per monthly time step.
         static_features: Number of static borrower features.
         learning_rate: Adam optimizer learning rate.
+        cell_type: Recurrent cell for the temporal encoder, "gru" or "lstm".
 
     Returns:
         Compiled Keras model with AUC, precision, recall, accuracy, and F1.
@@ -85,6 +87,7 @@ def build_hybrid_model(
     temporal_encoder = TemporalEncoder(
         sequence_length=sequence_length,
         number_of_features=temporal_features,
+        cell_type=cell_type,
     ).build()
     static_encoder = StaticEncoder(number_of_features=static_features).build()
 

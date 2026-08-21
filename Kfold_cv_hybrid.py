@@ -63,6 +63,7 @@ def run_kfold_cv(
     epochs: int = 100,
     batch_size: int = 128,
     random_seed: int = RANDOM_SEED,
+    cell_type: str = "gru",
 ) -> dict:
     """Run stratified k-fold CV over the hybrid model, pooling OOF predictions.
 
@@ -75,6 +76,7 @@ def run_kfold_cv(
         epochs: Max epochs per fold (early stopping still applies per fold).
         batch_size: Batch size per fold.
         random_seed: Reproducibility seed.
+        cell_type: Recurrent cell for the temporal encoder, "gru" or "lstm".
 
     Returns:
         Dict with pooled out-of-fold metrics and per-fold breakdown.
@@ -119,6 +121,7 @@ def run_kfold_cv(
             sequence_length=X_temporal.shape[1],
             temporal_features=X_temporal.shape[2],
             static_features=X_static.shape[1],
+            cell_type=cell_type,
         )
 
         class_weights = compute_class_weight(

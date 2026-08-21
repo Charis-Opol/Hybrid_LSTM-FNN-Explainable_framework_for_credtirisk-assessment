@@ -1,0 +1,24 @@
+{
+  "gru": {
+    "n_positives_total": 70,
+    "n_total": 3000,
+    "selected_threshold": 0.647726833820343,
+    "accuracy": 0.901,
+    "precision": 0.1152542372881356,
+    "recall": 0.4857142857142857,
+    "f1": 0.1863013698630137,
+    "average_precision": 0.11430488889330004,
+    "roc_auc": 0.8671769868356899
+  },
+  "lstm": {
+    "n_positives_total": 70,
+    "n_total": 3000,
+    "selected_threshold": 0.6284874081611633,
+    "accuracy": 0.8666666666666667,
+    "precision": 0.11448598130841121,
+    "recall": 0.7,
+    "f1": 0.19678714859437751,
+    "average_precision": 0.10347093257238688,
+    "roc_auc": 0.8816431009263774
+  }
+}
